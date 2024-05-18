@@ -2,25 +2,39 @@ import streamlit as st
 import pandas as pd
 from login import loginForm
 from teste import cadastroFuncionario
+from consultaFuncionario import consultaFuncionarios
 import main
 
 if 'bolean' not in st.session_state:
     st.session_state.bolean = False
     
 if 'usuarios' not in st.session_state:
-    st.session_state['usuarios'] = pd.DataFrame()
+    main.login()
     
 if 'funcionarios' not in st.session_state:
-    st.session_state['funcionarios'] = pd.DataFrame()
+    main.funcionarios()
+    
+if 'btnLogar' not in st.session_state:
+    st.session_state.btnLogar = False
 
 if st.session_state.bolean == False:
-    logado = loginForm(fetchUsuarios=main.login)
+    logado = loginForm()
     if logado == True:
         st.session_state.bolean = True
 
-btnLogar = st.button('Logar')
+btnLogar = ''
+if st.session_state.bolean == True:
+    if st.session_state.btnLogar == False:
+        btnLogar = st.button('Logar')
+        if btnLogar == True:
+            st.session_state.btnLogar = True
 
-st.write(st.session_state.bolean)
+st.write(st.session_state.btnLogar)
 
-if st.session_state.bolean == True and btnLogar == True:
-    cadastroFuncionario(funcionarios=main.funcionarios)
+if st.session_state.bolean == True and st.session_state.btnLogar == True:
+    tipoView = st.selectbox('TipoView', options=['Cadastro', 'Consulta'])
+    if tipoView == 'Cadastro':
+        cadastroFuncionario()
+    elif tipoView == 'Consulta':
+        main.funcionarios()
+        consultaFuncionarios()

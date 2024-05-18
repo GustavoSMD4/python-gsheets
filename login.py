@@ -1,8 +1,7 @@
 import streamlit as st
 
-def loginForm(fetchUsuarios):
+def loginForm():
     
-    fetchUsuarios()
     usuarios = st.session_state['usuarios']
     
     with st.form('formLogin', clear_on_submit=True):
@@ -13,7 +12,7 @@ def loginForm(fetchUsuarios):
     if btnLogin:
         if (usuarios['usuario'] == user).any() and (usuarios['senha'] == senha).any():
             st.success('Login sucesso')
-            return True
+            st.session_state.bolean = True
         else:
             st.warning('usuário/senha inválido')
-            return False
+            st.session_state.bolean = False

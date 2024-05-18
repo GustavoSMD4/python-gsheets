@@ -9,7 +9,7 @@ def login():
     st.session_state['usuarios'] = dadosLogin.dropna()
 
 def funcionarios():
-    funcionarios = conn.read(worksheet='teste', usecols=list(range(6)), ttl=0)
+    funcionarios = conn.read(worksheet='teste', usecols=list(range(5)), ttl=0)
     st.session_state['funcionarios'] = funcionarios.dropna()
 
 def update(data, worksheet, spread=None):

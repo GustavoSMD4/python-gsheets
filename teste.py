@@ -2,9 +2,8 @@ import streamlit as st
 import pandas as pd
 from streamlit_gsheets import GSheetsConnection
 
-def cadastroFuncionario(funcionarios):
+def cadastroFuncionario():
     
-    funcionarios()
     listaFuncionarios = st.session_state['funcionarios']
 
     st.title('Teste')
@@ -19,8 +18,7 @@ def cadastroFuncionario(funcionarios):
         col1, col2 = st.columns(2)
 
         idade = col1.text_input('idade')
-        dataAdmissao = col2.date_input('data admissão', format="DD/MM/YYYY")
-
+        
         col3, col4, col5 = st.columns(3)
 
         departamento = col3.selectbox('Departamento', options=listaFuncionarios['Departamento'].unique())
@@ -33,12 +31,11 @@ def cadastroFuncionario(funcionarios):
 
         funcionarioCadastrar = pd.DataFrame([
             {
-                'Nome': nome,
-                'Idade': idade,
+                'Nome': nome.upper(),
+                'Idade': int(idade),
                 'Departamento': departamento,
                 'Cargo': cargo,
-                'Salário': salario,
-                'Data de Admissão': dataAdmissao
+                'Salário': float(salario),
             }
         ])
 
@@ -49,6 +46,3 @@ def cadastroFuncionario(funcionarios):
         conn.update(worksheet='teste', data=updateSpread)
         
         st.success('Cadastrado')
-        funcionarios()
-
-    st.table(listaFuncionarios)
