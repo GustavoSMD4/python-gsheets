@@ -4,11 +4,11 @@ from streamlit_gsheets import GSheetsConnection
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 def login():
-    dadosLogin = conn.read(worksheet='login', usecols=list(range(2)))
+    dadosLogin = conn.read(worksheet='login', usecols=list(range(2)), ttl=0)
     return dadosLogin.dropna()
 
 def funcionarios():
-    funcionarios = conn.read(worksheet='teste', usecols=list(range(6)))
+    funcionarios = conn.read(worksheet='teste', usecols=list(range(6)), ttl=0)
     return funcionarios.dropna()
 
 def update(data, worksheet, spread=None):
