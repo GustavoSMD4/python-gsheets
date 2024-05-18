@@ -38,7 +38,7 @@ def cadastroFuncionario(funcionarios):
                 'Departamento': departamento,
                 'Cargo': cargo,
                 'Salário': salario,
-                'Data de Admissão': dataAdmissao
+                ##'Data de Admissão': dataAdmissao
             }
         ])
 
