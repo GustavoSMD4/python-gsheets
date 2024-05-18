@@ -1,6 +1,9 @@
 import streamlit as st
 
-def loginForm(usuarios):
+def loginForm(fetchUsuarios):
+    
+    fetchUsuarios()
+    usuarios = st.session_state['usuarios']
     
     with st.form('formLogin', clear_on_submit=True):
         user = st.text_input('Usuário')
