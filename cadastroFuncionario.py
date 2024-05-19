@@ -6,10 +6,6 @@ def cadastroFuncionario():
     
     listaFuncionarios = st.session_state['funcionarios']
 
-    st.title('Teste')
-
-    st.divider()
-
     with st.form('formCadastroFuncionario', clear_on_submit=True):
 
         st.title('Cadastro funcionário')
@@ -31,7 +27,7 @@ def cadastroFuncionario():
 
         funcionarioCadastrar = pd.DataFrame([
             {
-                'Nome': nome.upper(),
+                'Nome': nome.upper().rstrip(),
                 'Idade': int(idade),
                 'Departamento': departamento,
                 'Cargo': cargo,

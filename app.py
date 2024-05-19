@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 from login import loginForm
-from teste import cadastroFuncionario
+from cadastroFuncionario import cadastroFuncionario
 from consultaFuncionario import consultaFuncionarios
+from excluirFuncionario import deleteFuncionario
 import main
 
 if 'bolean' not in st.session_state:
@@ -29,12 +30,12 @@ if st.session_state.bolean == True:
         if btnLogar == True:
             st.session_state.btnLogar = True
 
-st.write(st.session_state.btnLogar)
-
 if st.session_state.bolean == True and st.session_state.btnLogar == True:
-    tipoView = st.selectbox('TipoView', options=['Cadastro', 'Consulta'])
+    tipoView = st.selectbox('TipoView', options=['Cadastro', 'Consulta', 'Excluir'])
     if tipoView == 'Cadastro':
         cadastroFuncionario()
     elif tipoView == 'Consulta':
         main.funcionarios()
         consultaFuncionarios()
+    elif tipoView == 'Excluir':
+        deleteFuncionario()
