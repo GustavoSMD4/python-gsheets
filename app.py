@@ -9,31 +9,41 @@ import main
 
 st.set_page_config(layout='wide')
 
-if 'bolean' not in st.session_state:
-    st.session_state.bolean = False
+if 'logado' not in st.session_state:
+    st.session_state.logado = False
     
 if 'usuarios' not in st.session_state:
     main.login()
-    
-if 'funcionarios' not in st.session_state:
-    main.funcionarios()
-    
+ 
 if 'btnLogar' not in st.session_state:
     st.session_state.btnLogar = False
-
-if st.session_state.bolean == False:
-    logado = loginForm()
-    if logado == True:
-        st.session_state.bolean = True
+    
+if 'logsLogin' not in st.session_state:
+    main.logsLogin()
+    
+if 'usuarioLogado' not in st.session_state:
+    st.session_state['usuarioLogado'] = pd.DataFrame()
+    
+if st.session_state.logado == False:
+    logged = loginForm()
+    if logged == True:
+        st.session_state.logado = True
 
 btnLogar = ''
-if st.session_state.bolean == True:
+if st.session_state.logado == True:
     if st.session_state.btnLogar == False:
         btnLogar = st.button('Logar')
         if btnLogar == True:
             st.session_state.btnLogar = True
 
-if st.session_state.bolean == True and st.session_state.btnLogar == True:
+
+usuarioLogado = st.session_state['usuarioLogado']
+
+if st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] == 'admin':
+    
+    if 'funcionarios' not in st.session_state:
+        main.funcionarios()
+
     tab = st.sidebar.radio('Teste', options=['Funcionário','teste2'])
     
     st.header(F"{tab}")
@@ -47,3 +57,5 @@ if st.session_state.bolean == True and st.session_state.btnLogar == True:
             consultaFuncionarios()
         elif tipoView == 'Excluir':
             deleteFuncionario()
+elif st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] != 'admin':
+    st.header('Você não tem permissão para acessar')

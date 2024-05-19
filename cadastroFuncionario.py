@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from streamlit_gsheets import GSheetsConnection
+from main import update
 
 def cadastroFuncionario():
     
@@ -36,9 +36,7 @@ def cadastroFuncionario():
         ])
 
         updateSpread = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
-
-        conn = st.connection('gsheets', type=GSheetsConnection)
         
-        conn.update(worksheet='teste', data=updateSpread)
+        update(worksheet='teste', data=updateSpread)
         
         st.success('Cadastrado')
