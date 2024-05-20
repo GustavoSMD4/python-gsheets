@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from main import update
+from main import update, consultaFuncionarios
 
 def cadastroFuncionario():
     
@@ -38,5 +38,6 @@ def cadastroFuncionario():
         updateSpread = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
         
         update(worksheet='teste', data=updateSpread)
+        consultaFuncionarios()
         
         st.success('Cadastrado')

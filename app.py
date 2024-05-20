@@ -1,15 +1,13 @@
 import streamlit as st
 import pandas as pd
 import streamlit_shadcn_ui as ui
+from streamlit_option_menu import option_menu
 from login import loginForm
-from cadastroFuncionario import cadastroFuncionario
-from consultaFuncionario import consultaFuncionarios
-from excluirFuncionario import deleteFuncionario
-from editarFuncionario import editar
-from statsSalarios import statsSalarios
+from views.funcionario.mainFuncionarios import viewFuncionarios
+from views.stats.salarios import statsSalarios
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -41,36 +39,40 @@ if st.session_state.logado == True:
 
 usuarioLogado = st.session_state['usuarioLogado']
 
-logout = st.sidebar.button('Logout')
+optionsMenu = []
+icons = []
 
-if logout:
-    st.session_state['logado'] = False
-    st.session_state['btnLogar'] = False
-    main.login()
 
 if st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] == 'admin':
+    optionsMenu = ['Funcionários', 'Stats Funcionários']
+    icons = ['person-vcard-fill', 'bar-chart-line-fill']
     
-    if 'funcionarios' not in st.session_state:
-        main.consultaFuncionarios()
-
-    tab = st.sidebar.radio('Teste', options=['Funcionário','Stats salário'])
-    
-    st.header(F"{tab}")
-    
-    if tab == 'Funcionário':
-        tipoView = ui.tabs(options=['Consulta', 'Cadastro', 'Editar', 'Excluir'], default_value='Consulta')
-        if tipoView == 'Cadastro':
-            cadastroFuncionario()
-        elif tipoView == 'Consulta':
-            main.consultaFuncionarios()
-            consultaFuncionarios()
-        elif tipoView == 'Excluir':
-            deleteFuncionario()
-        elif tipoView == 'Editar':
-            editar()
-    elif tab =='Stats salário':
-        statsSalarios()
         
 elif st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] != 'admin':
-    main.consultaFuncionarios()
-    consultaFuncionarios()
+    st.header('Você não tem permissão para acessar todas as abas')
+    optionsMenu = ['Stats Funcionários']
+    icons = ['bar-chart-line-fill']
+    
+
+if st.session_state.logado == True and st.session_state.btnLogar == True:
+    with st.sidebar:
+        menuSelecionado = option_menu(menu_title='Menu',
+                                options=optionsMenu,
+                                icons=icons,
+                                menu_icon='house-door-fill', 
+                                orientation='horizontal')
+        
+        logout = st.button('Logout')
+        if logout:
+            st.session_state['logado'] = False
+            st.session_state['btnLogar'] = False
+            main.login()
+            
+    if menuSelecionado == 'Funcionários':
+        st.header('Funcionários')
+        viewFuncionarios()
+                
+    elif menuSelecionado == 'Stats Funcionários':
+        main.consultaFuncionarios()
+        statsSalarios()
+    

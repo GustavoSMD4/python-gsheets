@@ -7,7 +7,7 @@ def editar():
     nome = st.text_input('Nome do funcionário que deseja editar')
     btnLocalizarFuncionario = st.button('localizar funcionário')
 
-    if btnLocalizarFuncionario == True:
+    if btnLocalizarFuncionario == True or btnLocalizarFuncionario == False:
         funcionarios = st.session_state['funcionarios']
 
         funcionarioUpdate = funcionarios[funcionarios['Nome'] == nome.upper()]
@@ -34,11 +34,12 @@ def editar():
                 
                 btnEditar = st.form_submit_button('Editar')
                 
-                if btnEditar == True:
+                if btnEditar == True or btnEditar == False:
                     funcionarios.loc[funcionarios['Nome'] == nome.upper(),
                                      ['Nome', 'Idade', 'Departamento', 'Cargo', 'Salário']] = [nomeEditar.upper(), int(idade), departamento, cargo, float(salario)]
                     
-                    update(data=funcionarios, worksheet='teste')
-                    consultaFuncionarios()
+                    st.table(funcionarios)
+                    # update(data=funcionarios, worksheet='teste')
+                    # consultaFuncionarios()
                 
                     st.success('Atualizado com sucesso.')
