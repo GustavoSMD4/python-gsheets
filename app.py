@@ -7,7 +7,7 @@ from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.stats.salarios import statsSalarios
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -18,7 +18,7 @@ if 'usuarios' not in st.session_state:
 if 'btnLogar' not in st.session_state:
     st.session_state.btnLogar = False
     
-if 'logsLogin' not in st.session_state:
+if 'logLogins' not in st.session_state:
     main.logsLogin()
     
 if 'usuarioLogado' not in st.session_state:

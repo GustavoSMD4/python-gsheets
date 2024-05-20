@@ -14,7 +14,7 @@ def consultaFuncionarios():
     
 def logsLogin():
     logs = conn.read(worksheet='logLogins', usecols=list(range(2)), ttl=0)
-    st.session_state['logsLogin'] = logs.dropna()
+    st.session_state['logLogins'] = logs.dropna()
 
 def update(data, worksheet, spreadUrl=None):
     if spreadUrl != None:

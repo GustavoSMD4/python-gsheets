@@ -6,7 +6,7 @@ from main import update, login
 def loginForm():
     
     usuarios = st.session_state['usuarios']
-    logs = st.session_state['logsLogin']
+    logs = st.session_state['logLogins']
     
     tipo = st.selectbox('Login/Criar Conta', options=['Login', 'Criar Conta'])
     
@@ -16,33 +16,43 @@ def loginForm():
             user = st.text_input('Usuário')
             senha = st.text_input("Senha", type="password")
             btnLogin = st.form_submit_button('Verificar')
+            
+        
+            if btnLogin == True:
+                if not user or not senha:
+                    st.warning('Usuário ou senha inválidos.')
+                else:
+                    usuarioDigitadoExiste = usuarios.loc[usuarios['usuario'] == user]
+                    if len(usuarioDigitadoExiste) > 1 and usuarioDigitadoExiste['senha'].iloc[0] != senha:
+                        st.warning('Usuário ou senha inválidos')
 
-        if btnLogin == True:
-            if (usuarios['usuario'] == user).any() and (usuarios['senha'] == senha).any():
-                usuarioLogado = usuarios[(usuarios['usuario'] == user) & (usuarios['senha'] == senha)].iloc[0]
+                    else:
+                        if (usuarios['usuario'] == user).any() and (usuarios['senha'] == senha).any():
+                            usuarioLogado = usuarios[(usuarios['usuario'] == user) & (usuarios['senha'] == senha)].iloc[0]
 
-                st.session_state['usuarioLogado'] = usuarioLogado
+                            st.session_state['usuarioLogado'] = usuarioLogado
 
-                st.success('Usuário e senha localizados, clique em logar para continuar.')
+                            st.success('Usuário e senha localizados, clique em logar para continuar.')
 
-                log = pd.DataFrame([
-                {
-                    "user": usuarioLogado['usuario'],
-                    "data": date.today()
-                }
-            ])
+                            log = pd.DataFrame([
+                            {
+                                "user": usuarioLogado['usuario'],
+                                "data": date.today()
+                            }
+                        ])
 
-                userUpdate = pd.concat([logs, log], ignore_index=True)
-                update(userUpdate, worksheet='logLogins')
+                            if len(logs[logs['user'] == user]) < 1:
+                                userUpdate = pd.concat([logs, log], ignore_index=True)
+                                update(userUpdate, worksheet='logLogins')
 
-                st.session_state.logado = True
-                return True
-            else:
-                st.warning('usuário/senha inválido')
-                st.session_state.logado = False
-                return False
+                            st.session_state.logado = True
+                            return True
+                        else:
+                            st.warning('usuário/senha inválido')
+                            st.session_state.logado = False
+                            return False
 
-    if tipo == 'Criar Conta':
+    elif tipo == 'Criar Conta':
 
         with st.form('formCriarConta'):
             st.header('Criar Conta')
