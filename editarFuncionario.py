@@ -1,5 +1,5 @@
 import streamlit as st
-from main import update
+from main import update, consultaFuncionarios
 
 def editar():
 
@@ -39,5 +39,6 @@ def editar():
                                      ['Nome', 'Idade', 'Departamento', 'Cargo', 'Salário']] = [nomeEditar.upper(), int(idade), departamento, cargo, float(salario)]
                     
                     update(data=funcionarios, worksheet='teste')
+                    consultaFuncionarios()
                 
                     st.success('Atualizado com sucesso.')

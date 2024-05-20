@@ -8,7 +8,7 @@ def login():
     dadosLogin = conn.read(worksheet='login', usecols=list(range(3)), ttl=0)
     st.session_state['usuarios'] = dadosLogin.dropna()
 
-def funcionarios():
+def consultaFuncionarios():
     funcionarios = conn.read(worksheet='teste', usecols=list(range(5)), ttl=0)
     st.session_state['funcionarios'] = funcionarios.dropna()
     
