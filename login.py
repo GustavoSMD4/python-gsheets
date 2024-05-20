@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import date
-from main import update
+from main import update, login
 
 def loginForm():
     
@@ -13,6 +13,8 @@ def loginForm():
         user = st.text_input('Usuário')
         senha = st.text_input("Senha", type="password")
         btnLogin = st.form_submit_button('Verificar')
+    
+    btnCriarConta = st.button('Criar conta')
         
     if btnLogin:
         if (usuarios['usuario'] == user).any() and (usuarios['senha'] == senha).any():
@@ -24,10 +26,8 @@ def loginForm():
             
             log = pd.DataFrame([
                 {
-                    
                     "user": usuarioLogado['usuario'],
                     "data": date.today()
-                    
                 }
             ])
             
@@ -38,3 +38,26 @@ def loginForm():
         else:
             st.warning('usuário/senha inválido')
             st.session_state.logado = False
+
+    if btnCriarConta:
+        
+        if user and senha and (usuarios['usuario'] != user).any():
+            
+            userCreate = pd.DataFrame([
+                {
+                    'usuario': user,
+                    'senha': senha,
+                    'role': 'user'
+                }
+            ])
+            
+            dfUpdate = pd.concat([usuarios, userCreate], ignore_index=True)
+            
+            update(data=dfUpdate, worksheet='login')
+            st.success('Usuário cadastrado')
+            login()
+            
+        elif (usuarios['usuario'] == user).any():
+            st.warning('Nome de usuário já existe')
+        elif not user and not senha:
+            st.warning('Usuario ou senha não infomados.')

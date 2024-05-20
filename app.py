@@ -39,6 +39,12 @@ if st.session_state.logado == True:
 
 usuarioLogado = st.session_state['usuarioLogado']
 
+logout = st.sidebar.button('Logout')
+
+if logout:
+    st.session_state['logado'] = False
+    st.session_state['btnLogar'] = False
+
 if st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] == 'admin':
     
     if 'funcionarios' not in st.session_state:
@@ -58,4 +64,5 @@ if st.session_state.logado == True and st.session_state.btnLogar == True and usu
         elif tipoView == 'Excluir':
             deleteFuncionario()
 elif st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] != 'admin':
-    st.header('Você não tem permissão para acessar')
+    main.funcionarios()
+    consultaFuncionarios()
