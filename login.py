@@ -23,7 +23,7 @@ def loginForm():
 
                 st.session_state['usuarioLogado'] = usuarioLogado
 
-                st.success('Login sucesso')
+                st.success('Usuário e senha localizados, clique em logar para continuar.')
 
                 log = pd.DataFrame([
                 {
@@ -51,7 +51,13 @@ def loginForm():
             btnCriar = st.form_submit_button('Verificar')
 
         if btnCriar == True:
-            if user and senha and (usuarios['usuario'] != user).any():
+            if not user or not senha:
+                st.warning('Usuario ou senha não infomados.')
+
+            elif (usuarios['usuario'] == user).any():
+                st.warning('Nome de usuário já existe.')
+                
+            elif user and senha and (usuarios['usuario'] != user).any():
 
                 userCreate = pd.DataFrame([
                     {
@@ -69,8 +75,4 @@ def loginForm():
 
                 st.session_state.criarConta = False
 
-            elif not user and not senha:
-                st.warning('Usuario ou senha não infomados ou usuário já existe.')
-
-            elif (usuarios['usuario'] == user).any():
-                st.warning('Nome de usuário já existe')
+            
