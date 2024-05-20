@@ -58,7 +58,7 @@ def loginForm():
             st.header('Criar Conta')
             user = st.text_input('Usuário', autocomplete='off')
             senha = st.text_input("Senha", type="password")
-            btnCriar = st.form_submit_button('Verificar')
+            btnCriar = st.form_submit_button('Criar conta')
 
         if btnCriar == True:
             if not user or not senha:
