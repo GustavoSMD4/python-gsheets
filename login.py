@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from streamlit_option_menu import option_menu
 from datetime import date
 from main import update, login
 
@@ -8,7 +9,11 @@ def loginForm():
     usuarios = st.session_state['usuarios']
     logs = st.session_state['logLogins']
     
-    tipo = st.selectbox('Login/Criar Conta', options=['Login', 'Criar Conta'])
+    options=['Login', 'Criar Conta']
+    tipo = option_menu(menu_title='Login/Criar Conta',
+                       options=options,
+                       icons=['box-arrow-in-right', 'plus-square'],
+                       orientation='horizontal')
     
     if tipo == 'Login':
         with st.form('formLogin'):
