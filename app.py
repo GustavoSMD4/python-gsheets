@@ -7,7 +7,7 @@ from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.stats.salarios import statsSalarios
 import main
 
-# st.set_page_config(layout='wide')
+st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -59,8 +59,7 @@ if st.session_state.logado == True and st.session_state.btnLogar == True:
         menuSelecionado = option_menu(menu_title='Menu',
                                 options=optionsMenu,
                                 icons=icons,
-                                menu_icon='house-door-fill', 
-                                orientation='horizontal')
+                                menu_icon='house-door-fill',)
         
         logout = st.button('Logout')
         if logout:
