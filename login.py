@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
 from datetime import date
-from main import update, login
+from main import update, login, logsLogin
 
 def loginForm():
     
@@ -48,7 +48,8 @@ def loginForm():
 
                             if len(logs[logs['user'] == user]) < 1:
                                 userUpdate = pd.concat([logs, log], ignore_index=True)
-                                update(userUpdate, worksheet='logLogins')
+                                update(worksheet='logLogins', data=userUpdate)
+                                logsLogin()
 
                             st.session_state.logado = True
                             return True
@@ -61,22 +62,24 @@ def loginForm():
 
         with st.form('formCriarConta'):
             st.header('Criar Conta')
-            user = st.text_input('Usuário', autocomplete='off')
+            nome = st.text_input('Nome', autocomplete='off')
+            user = st.text_input('Nome usuário', autocomplete='off')
             senha = st.text_input("Senha", type="password")
             btnCriar = st.form_submit_button('Criar conta')
 
         if btnCriar == True:
-            if not user or not senha:
+            if not user or not senha or not nome:
                 st.warning('Usuario ou senha não infomados.')
 
             elif (usuarios['usuario'] == user).any():
                 st.warning('Nome de usuário já existe.')
                 
-            elif user and senha and (usuarios['usuario'] != user).any():
+            elif user and senha and nome and (usuarios['usuario'] != user).any():
 
                 userCreate = pd.DataFrame([
                     {
                         'usuario': user,
+                        'nome': nome,
                         'senha': senha,
                         'role': 'user'
                     }

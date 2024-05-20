@@ -56,7 +56,7 @@ elif st.session_state.logado == True and st.session_state.btnLogar == True and u
 
 if st.session_state.logado == True and st.session_state.btnLogar == True:
     with st.sidebar:
-        menuSelecionado = option_menu(menu_title=F"Olá, {usuarioLogado['usuario']}",
+        menuSelecionado = option_menu(menu_title=F"Olá, {usuarioLogado['nome']}",
                                 options=optionsMenu,
                                 icons=icons,
                                 menu_icon='house-door-fill',)

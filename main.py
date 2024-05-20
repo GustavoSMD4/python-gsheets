@@ -5,7 +5,7 @@ from streamlit_gsheets import GSheetsConnection
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 def login():
-    dadosLogin = conn.read(worksheet='login', usecols=list(range(3)), ttl=0)
+    dadosLogin = conn.read(worksheet='login', usecols=list(range(4)), ttl=0)
     st.session_state['usuarios'] = dadosLogin.dropna()
 
 def consultaFuncionarios():
