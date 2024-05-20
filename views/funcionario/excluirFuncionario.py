@@ -6,7 +6,7 @@ import streamlit_shadcn_ui as ui
 def deleteFuncionario():
     with st.form('formDeleteFuncionario'):
         st.header('Excluir Funcionário')
-        nome = st.text_input('Nome')
+        nome = st.text_input('Nome', autocomplete='off')
 
         btnDelete = st.form_submit_button('Deletar')
 

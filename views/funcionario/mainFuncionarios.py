@@ -1,5 +1,5 @@
 import streamlit as st
-import streamlit_shadcn_ui as ui
+from streamlit_option_menu import option_menu
 from views.funcionario.cadastroFuncionario import cadastroFuncionario
 from views.funcionario.consultaFuncionario import consultaFuncionarios
 from views.funcionario.excluirFuncionario import deleteFuncionario
@@ -8,7 +8,12 @@ import main
  
 def viewFuncionarios():
      
-    tipoView = ui.tabs(options=['Consulta', 'Cadastro', 'Editar', 'Excluir'], default_value='Consulta')
+    tipoView = option_menu(menu_title='Funcionários',
+                           options=['Consulta', 'Cadastro', 'Editar', 'Excluir'],
+                           icons=['search', 'person-plus-fill', 'pen-fill', 'person-x-fill'],
+                           menu_icon='person-vcard-fill', 
+                           orientation='horizontal')
+    
     if tipoView == 'Cadastro':
         cadastroFuncionario()
     elif tipoView == 'Consulta':

@@ -13,7 +13,7 @@ def loginForm():
     if tipo == 'Login':
         with st.form('formLogin'):
             st.header('Login')
-            user = st.text_input('Usuário')
+            user = st.text_input('Usuário', autocomplete='off')
             senha = st.text_input("Senha", type="password")
             btnLogin = st.form_submit_button('Verificar')
             
@@ -56,7 +56,7 @@ def loginForm():
 
         with st.form('formCriarConta'):
             st.header('Criar Conta')
-            user = st.text_input('Usuário')
+            user = st.text_input('Usuário', autocomplete='off')
             senha = st.text_input("Senha", type="password")
             btnCriar = st.form_submit_button('Verificar')
 

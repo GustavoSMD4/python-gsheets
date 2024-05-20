@@ -7,7 +7,7 @@ from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.stats.salarios import statsSalarios
 import main
 
-# st.set_page_config(layout='wide')
+st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -56,7 +56,7 @@ elif st.session_state.logado == True and st.session_state.btnLogar == True and u
 
 if st.session_state.logado == True and st.session_state.btnLogar == True:
     with st.sidebar:
-        menuSelecionado = option_menu(menu_title='Menu',
+        menuSelecionado = option_menu(menu_title=F"Olá, {usuarioLogado['usuario']}",
                                 options=optionsMenu,
                                 icons=icons,
                                 menu_icon='house-door-fill',)
@@ -68,7 +68,6 @@ if st.session_state.logado == True and st.session_state.btnLogar == True:
             main.login()
             
     if menuSelecionado == 'Funcionários':
-        st.header('Funcionários')
         viewFuncionarios()
                 
     elif menuSelecionado == 'Stats Funcionários':

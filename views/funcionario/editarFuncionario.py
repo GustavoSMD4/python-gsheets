@@ -20,9 +20,9 @@ def editar():
                 col1, col2 = st.columns([3, 1])
                 col3, col4, col5 = st.columns(3)
                 
-                nomeEditar = col1.text_input('Nome', value=funcionarioUpdate.iloc[0]['Nome'])
+                nomeEditar = col1.text_input('Nome', value=funcionarioUpdate.iloc[0]['Nome'], autocomplete='off')
                 
-                idade = col2.text_input('Idade', value=int(funcionarioUpdate.iloc[0]['Idade']))
+                idade = col2.text_input('Idade', value=int(funcionarioUpdate.iloc[0]['Idade']), autocomplete='off')
                 
                 departamento = col3.selectbox('Departamento', options=funcionarios['Departamento'].unique(),
                                             index=list(funcionarios['Departamento'].unique()).index(funcionarioUpdate.iloc[0]['Departamento']))
