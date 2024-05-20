@@ -5,6 +5,7 @@ from login import loginForm
 from cadastroFuncionario import cadastroFuncionario
 from consultaFuncionario import consultaFuncionarios
 from excluirFuncionario import deleteFuncionario
+from editarFuncionario import editar
 import main
 
 st.set_page_config(layout='wide')
@@ -44,6 +45,7 @@ logout = st.sidebar.button('Logout')
 if logout:
     st.session_state['logado'] = False
     st.session_state['btnLogar'] = False
+    main.login()
 
 if st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] == 'admin':
     
@@ -55,7 +57,7 @@ if st.session_state.logado == True and st.session_state.btnLogar == True and usu
     st.header(F"{tab}")
     
     if tab == 'Funcionário':
-        tipoView = ui.tabs(options=['Consulta', 'Cadastro', 'Excluir'], default_value='Consulta')
+        tipoView = ui.tabs(options=['Consulta', 'Cadastro', 'Editar', 'Excluir'], default_value='Consulta')
         if tipoView == 'Cadastro':
             cadastroFuncionario()
         elif tipoView == 'Consulta':
@@ -63,6 +65,8 @@ if st.session_state.logado == True and st.session_state.btnLogar == True and usu
             consultaFuncionarios()
         elif tipoView == 'Excluir':
             deleteFuncionario()
+        elif tipoView == 'Editar':
+            editar()
 elif st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] != 'admin':
     main.funcionarios()
     consultaFuncionarios()

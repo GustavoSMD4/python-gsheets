@@ -56,8 +56,9 @@ def loginForm():
             update(data=dfUpdate, worksheet='login')
             st.success('Usuário cadastrado')
             login()
+
+        elif not user and not senha:
+            st.warning('Usuario ou senha não infomados ou usuário já existe.')
             
         elif (usuarios['usuario'] == user).any():
             st.warning('Nome de usuário já existe')
-        elif not user and not senha:
-            st.warning('Usuario ou senha não infomados.')
