@@ -16,7 +16,7 @@ def logsLogin():
     logs = conn.read(worksheet='logLogins', usecols=list(range(2)), ttl=0)
     st.session_state['logLogins'] = logs.dropna()
 
-def update(data, worksheet, spreadUrl=None):
+def update(worksheet, data, spreadUrl=None):
     if spreadUrl != None:
         conn.update(worksheet=worksheet, data=data, spreadsheet=spreadUrl)
     else:
