@@ -8,7 +8,7 @@ from main import update, login, logsLogin
 def loginForm():
     
     usuarios = st.session_state['usuarios']
-    logs = st.session_state['logLogins']
+    logs = st.session_state['logsLogin']
     
     options=['Login', 'Criar Conta']
     tipo = option_menu(menu_title='Login/Criar Conta',
@@ -29,7 +29,7 @@ def loginForm():
                     st.warning('Usuário ou senha inválidos.')
                 else:
                     usuarioDigitadoExiste = usuarios.loc[usuarios['usuario'] == user]
-                    if len(usuarioDigitadoExiste) > 1 and usuarioDigitadoExiste['senha'].iloc[0] != senha:
+                    if len(usuarioDigitadoExiste) < 1 or usuarioDigitadoExiste['senha'].iloc[0] != senha:
                         st.warning('Usuário ou senha inválidos')
 
                     else:
@@ -42,14 +42,14 @@ def loginForm():
 
                             log = pd.DataFrame([
                             {
-                                "user": usuarioLogado['usuario'],
+                                "usuario": usuarioLogado['usuario'],
                                 "data": date.today()
                             }
                         ])
 
-                            if len(logs[logs['user'] == user]) < 1:
+                            if len(logs[logs['usuario'] == user]) < 1:
                                 userUpdate = pd.concat([logs, log], ignore_index=True)
-                                update(worksheet='logLogins', data=userUpdate)
+                                update(worksheet='logsLogin', data=userUpdate)
                                 logsLogin()
 
                             return True
@@ -86,10 +86,8 @@ def loginForm():
 
                 dfUpdate = pd.concat([usuarios, userCreate], ignore_index=True)
 
-                update(data=dfUpdate, worksheet='login')
+                update(data=dfUpdate, worksheet='usuario')
                 st.success('Usuário cadastrado')
                 login()
-
-                st.session_state.criarConta = False
 
             

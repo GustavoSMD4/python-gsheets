@@ -13,10 +13,10 @@ def deleteFuncionario():
         funcionarios = st.session_state['funcionarios']
         
         funcionariosUpdate = funcionarios
-        funcionariosUpdate['Nome'] = funcionariosUpdate['Nome'].str.upper()
-        funcionariosUpdate = funcionariosUpdate[funcionariosUpdate['Nome'] != nome.upper()]
+        funcionariosUpdate['Nome'] = funcionariosUpdate['nome'].str.upper()
+        funcionariosUpdate = funcionariosUpdate[funcionariosUpdate['nome'] != nome.upper()]
         st.write(nome)
         ui.table(funcionariosUpdate)
     
-        update(worksheet='teste',data=funcionariosUpdate)
+        update(worksheet='funcionario', data=funcionariosUpdate)
         st.success('Excluido')

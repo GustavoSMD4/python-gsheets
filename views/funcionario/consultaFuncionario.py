@@ -1,9 +1,12 @@
 import streamlit as st
 import streamlit_shadcn_ui as ui
 
-def consultaFuncionarios():
+def consulta():
     funcionarios = st.session_state['funcionarios']
     
     st.subheader('Consulta funcionários')
     
-    ui.table(funcionarios[['Nome', 'Departamento', 'Cargo']])
+    funcionariosDisplay = funcionarios[0:]
+    funcionariosDisplay['salario'] = funcionarios['salario'].apply(lambda x: F"R${x:,.2f}")
+    
+    ui.table(funcionariosDisplay)

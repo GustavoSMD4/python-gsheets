@@ -3,7 +3,7 @@ import pandas as pd
 from streamlit_option_menu import option_menu
 from login import loginForm
 from views.funcionario.mainFuncionarios import viewFuncionarios
-from views.stats.salarios import statsSalarios
+from views.usuarios.mainUsuarios import viewUsuarios
 import main
 
 st.set_page_config(layout='wide')
@@ -14,7 +14,7 @@ if 'logado' not in st.session_state:
 if 'usuarios' not in st.session_state:
     main.login()
     
-if 'logLogins' not in st.session_state:
+if 'logsLogin' not in st.session_state:
     main.logsLogin()
     
 if 'usuarioLogado' not in st.session_state:
@@ -31,16 +31,13 @@ usuarioLogado = st.session_state['usuarioLogado']
 optionsMenu = []
 icons = []
 
-
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
-    optionsMenu = ['Funcionários', 'Stats Funcionários']
-    icons = ['person-vcard-fill', 'bar-chart-line-fill']
-    
+    optionsMenu = ['Home', 'Usuários', 'Funcionários']
+    icons = ['house-door-fill', 'person-fill', 'person-vcard-fill', 'bar-chart-line-fill']
         
 elif st.session_state.logado == True and usuarioLogado['role'] != 'admin':
-    st.header('Você não tem permissão para acessar todas as abas')
-    optionsMenu = ['Stats Funcionários']
-    icons = ['bar-chart-line-fill']
+    optionsMenu = ['Home']
+    icons = ['house-door-fill']
     
 
 if st.session_state.logado == True:
@@ -55,10 +52,13 @@ if st.session_state.logado == True:
             st.session_state.logado = False
             st.rerun()
             
-    if menuSelecionado == 'Funcionários':
+    if menuSelecionado == 'Home':
+        st.header('Home')
+        
+    if menuSelecionado == 'Usuários':
+        viewUsuarios()
+    
+    elif menuSelecionado == 'Funcionários':
         viewFuncionarios()
-                
-    elif menuSelecionado == 'Stats Funcionários':
-        main.consultaFuncionarios()
-        statsSalarios()
+        
     

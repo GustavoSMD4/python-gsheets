@@ -1,11 +1,14 @@
 from streamlit_option_menu import option_menu
 from views.funcionario.cadastroFuncionario import cadastroFuncionario
-from views.funcionario.consultaFuncionario import consultaFuncionarios
+from views.funcionario.consultaFuncionario import consulta
 from views.funcionario.excluirFuncionario import deleteFuncionario
 from views.funcionario.editarFuncionario import editar
-import main
+from main import consultaFuncionarios, getDepartamentos, getCargos
  
 def viewFuncionarios():
+     
+    getDepartamentos()
+    getCargos()
      
     tipoView = option_menu(menu_title='Funcionários',
                            options=['Consulta', 'Cadastro', 'Editar', 'Excluir'],
@@ -16,8 +19,8 @@ def viewFuncionarios():
     if tipoView == 'Cadastro':
         cadastroFuncionario()
     elif tipoView == 'Consulta':
-        main.consultaFuncionarios()
         consultaFuncionarios()
+        consulta()
     elif tipoView == 'Excluir':
         deleteFuncionario()
     elif tipoView == 'Editar':

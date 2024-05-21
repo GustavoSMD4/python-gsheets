@@ -5,6 +5,8 @@ from main import update, consultaFuncionarios
 def cadastroFuncionario():
     
     listaFuncionarios = st.session_state['funcionarios']
+    departamentos = st.session_state['departamentos']
+    cargos = st.session_state['cargos']
 
     with st.form('formCadastroFuncionario', clear_on_submit=True):
 
@@ -17,8 +19,8 @@ def cadastroFuncionario():
         
         col3, col4, col5 = st.columns(3)
 
-        departamento = col3.selectbox('Departamento', options=listaFuncionarios['Departamento'].unique())
-        cargo = col4.selectbox('cargo', options=listaFuncionarios['Cargo'].unique())
+        departamento = col3.selectbox('Departamento', options=departamentos['departamento'])
+        cargo = col4.selectbox('Cargo', options=cargos['cargo'])
         salario = col5.number_input('Salário')
 
         btnAdicionar = st.form_submit_button('Adicionar')
@@ -27,17 +29,17 @@ def cadastroFuncionario():
 
         funcionarioCadastrar = pd.DataFrame([
             {
-                'Nome': nome.upper().rstrip(),
-                'Idade': int(idade),
-                'Departamento': departamento,
-                'Cargo': cargo,
-                'Salário': float(salario),
+                'nome': nome.upper().rstrip(),
+                'idade': int(idade),
+                'departamento': departamento,
+                'cargo': cargo,
+                'salario': float(salario),
             }
         ])
 
         updateSpread = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
         
-        update(worksheet='teste', data=updateSpread)
+        update(worksheet='funcionario', data=updateSpread)
         consultaFuncionarios()
         
         st.success('Cadastrado')
