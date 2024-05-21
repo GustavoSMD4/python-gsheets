@@ -1,4 +1,3 @@
-import streamlit as st
 from streamlit_option_menu import option_menu
 from views.funcionario.cadastroFuncionario import cadastroFuncionario
 from views.funcionario.consultaFuncionario import consultaFuncionarios

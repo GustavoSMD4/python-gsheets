@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import streamlit_shadcn_ui as ui
 from streamlit_option_menu import option_menu
 from login import loginForm
 from views.funcionario.mainFuncionarios import viewFuncionarios

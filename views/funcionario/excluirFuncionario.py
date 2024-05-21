@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 from main import update
 import streamlit_shadcn_ui as ui
 
