@@ -32,21 +32,25 @@ def cadastroFuncionario():
 
         btnAdicionar = st.form_submit_button('Adicionar')
 
-    if btnAdicionar == True:
-
-        funcionarioCadastrar = pd.DataFrame([
-            {
-                'nome': nome.upper().rstrip(),
-                'idade': int(idade),
-                'departamento': departamento,
-                'cargo': cargo,
-                'salario': float(salario),
-            }
-        ])
-
-        funcionarios = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
-        
-        update(worksheet='funcionario', data=funcionarios)
-        consultaFuncionarios()
-        
-        st.success('Cadastrado')
+        if btnAdicionar == True:
+            if nome and idade and departamento and cargo and salario:
+            
+                funcionarioCadastrar = pd.DataFrame([
+                    {
+                        'nome': nome.upper().rstrip(),
+                        'idade': int(idade),
+                        'departamento': departamento,
+                        'cargo': cargo,
+                        'salario': float(salario),
+                    }
+                ])
+    
+                funcionarios = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
+    
+                update(worksheet='funcionario', data=funcionarios)
+                consultaFuncionarios()
+    
+                st.success('Cadastrado')
+            
+            else:
+                st.warning('Algum campo não foi informado')

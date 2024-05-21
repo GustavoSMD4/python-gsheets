@@ -1,5 +1,5 @@
 import streamlit as st
-from main import update
+from main import update, consultaFuncionarios
 import streamlit_shadcn_ui as ui
 
 def deleteFuncionario():
@@ -18,4 +18,5 @@ def deleteFuncionario():
         ui.table(funcionarios)
     
         update(worksheet='funcionario', data=funcionarios)
+        consultaFuncionarios()
         st.success('Excluido')

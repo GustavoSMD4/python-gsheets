@@ -29,8 +29,8 @@ def editar():
     if 'funcionarioUpdate' in st.session_state:
         funcionarioUpdate = st.session_state['funcionarioUpdate']
         
-        if not funcionarioUpdate.empty:
-            with st.form('formEditarFuncionario'):
+        if not funcionarioUpdate.empty and nome:
+            with st.form('formEditarFuncionario', clear_on_submit=True):
                 col1, col2 = st.columns([3, 1])
                 col3, col4, col5 = st.columns(3)
                 
@@ -53,6 +53,7 @@ def editar():
                                      ['nome', 'idade', 'departamento', 'cargo', 'salario']] = [nomeEditar.upper(), int(idade), departamento, cargo, float(salario)]
                     
                     update(worksheet='funcionario', data=funcionarios)
+                    consultaFuncionarios()
                     
                     st.success('Atualizado com sucesso.')
                     st.session_state.pop('funcionarioUpdate')  # Limpa o estado após a atualização

@@ -4,6 +4,7 @@ from streamlit_option_menu import option_menu
 from login import loginForm
 from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.usuarios.mainUsuarios import viewUsuarios
+from views.conta.mainContas import viewContas
 import main
 
 # st.set_page_config(layout='wide')
@@ -32,8 +33,8 @@ optionsMenu = []
 icons = []
 
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
-    optionsMenu = ['Home', 'Gestão de usuários', 'Funcionários']
-    icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'bar-chart-line-fill']
+    optionsMenu = ['Home', 'Gestão de usuários', 'Funcionários', 'Contas']
+    icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'credit-card-2-back-fill']
         
 elif st.session_state.logado == True and usuarioLogado['role'] != 'admin':
     optionsMenu = ['Home']
@@ -60,5 +61,8 @@ if st.session_state.logado == True:
     
     elif menuSelecionado == 'Funcionários':
         viewFuncionarios()
+        
+    elif menuSelecionado == 'Contas':
+        viewContas()
         
     

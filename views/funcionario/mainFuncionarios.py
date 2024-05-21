@@ -3,7 +3,7 @@ from views.funcionario.cadastroFuncionario import cadastroFuncionario
 from views.funcionario.consultaFuncionario import consulta
 from views.funcionario.excluirFuncionario import deleteFuncionario
 from views.funcionario.editarFuncionario import editar
-from main import consultaFuncionarios, getDepartamentos, getCargos
+from main import consultaFuncionarios
  
 def viewFuncionarios():
      
