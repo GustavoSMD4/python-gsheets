@@ -28,7 +28,7 @@ def editar():
                 
                 usuarioEditar = col1.text_input('Usuário', value=usuarioUpdate.iloc[0]['usuario'], autocomplete='off')
                 
-                nomeEditar = col2.text_input('Idade', value=usuarioUpdate.iloc[0]['nome'], autocomplete='off')
+                nomeEditar = col2.text_input('Nome', value=usuarioUpdate.iloc[0]['nome'], autocomplete='off')
                 
                 senha = col3.text_input('Senha', value=usuarioUpdate.iloc[0]['senha'], type='password')
                 

@@ -6,7 +6,8 @@ def viewUsuarios():
     
     view = option_menu(menu_title='Usuários',
                        options=['Usuários', 'Editar Usuários'],
-                       menu_icon='person-fill',
+                       icons=['person-fill', 'pencil-square'],
+                       menu_icon='person-fill-gear',
                        orientation='horizontal')
     
     if view == 'Usuários':

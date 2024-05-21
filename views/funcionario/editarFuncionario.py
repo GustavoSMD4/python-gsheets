@@ -1,8 +1,15 @@
 import streamlit as st
-from main import update, consultaFuncionarios
+from main import update, consultaFuncionarios, getDepartamentos, getCargos
 
 def editar():
     funcionarios = st.session_state['funcionarios']
+    
+    if 'departamentos' not in st.session_state:
+        getDepartamentos()
+        
+    if 'cargos' not in st.session_state:
+        getCargos()
+    
     departamentos = st.session_state['departamentos']
     cargos = st.session_state['cargos']
 
@@ -46,7 +53,6 @@ def editar():
                                      ['nome', 'idade', 'departamento', 'cargo', 'salario']] = [nomeEditar.upper(), int(idade), departamento, cargo, float(salario)]
                     
                     update(worksheet='funcionario', data=funcionarios)
-                    consultaFuncionarios()
                     
                     st.success('Atualizado com sucesso.')
                     st.session_state.pop('funcionarioUpdate')  # Limpa o estado após a atualização

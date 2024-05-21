@@ -7,12 +7,9 @@ from main import consultaFuncionarios, getDepartamentos, getCargos
  
 def viewFuncionarios():
      
-    getDepartamentos()
-    getCargos()
-     
     tipoView = option_menu(menu_title='Funcionários',
                            options=['Consulta', 'Cadastro', 'Editar', 'Excluir'],
-                           icons=['search', 'person-plus-fill', 'pen-fill', 'person-x-fill'],
+                           icons=['search', 'person-plus-fill', 'pencil-square', 'person-x-fill'],
                            menu_icon='person-vcard-fill', 
                            orientation='horizontal')
     

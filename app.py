@@ -6,7 +6,7 @@ from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.usuarios.mainUsuarios import viewUsuarios
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -32,8 +32,8 @@ optionsMenu = []
 icons = []
 
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
-    optionsMenu = ['Home', 'Usuários', 'Funcionários']
-    icons = ['house-door-fill', 'person-fill', 'person-vcard-fill', 'bar-chart-line-fill']
+    optionsMenu = ['Home', 'Gestão de usuários', 'Funcionários']
+    icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'bar-chart-line-fill']
         
 elif st.session_state.logado == True and usuarioLogado['role'] != 'admin':
     optionsMenu = ['Home']
@@ -55,7 +55,7 @@ if st.session_state.logado == True:
     if menuSelecionado == 'Home':
         st.header('Home')
         
-    if menuSelecionado == 'Usuários':
+    if menuSelecionado == 'Gestão de usuários':
         viewUsuarios()
     
     elif menuSelecionado == 'Funcionários':

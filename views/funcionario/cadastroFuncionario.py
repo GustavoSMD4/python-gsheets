@@ -1,10 +1,17 @@
 import streamlit as st
 import pandas as pd
-from main import update, consultaFuncionarios
+from main import update, consultaFuncionarios, getDepartamentos, getCargos
 
 def cadastroFuncionario():
     
     listaFuncionarios = st.session_state['funcionarios']
+    
+    if 'departamentos' not in st.session_state:
+        getDepartamentos()
+        
+    if 'cargos' not in st.session_state:
+        getCargos()
+    
     departamentos = st.session_state['departamentos']
     cargos = st.session_state['cargos']
 
@@ -37,9 +44,9 @@ def cadastroFuncionario():
             }
         ])
 
-        updateSpread = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
+        funcionarios = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
         
-        update(worksheet='funcionario', data=updateSpread)
+        update(worksheet='funcionario', data=funcionarios)
         consultaFuncionarios()
         
         st.success('Cadastrado')
