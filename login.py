@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import streamlit_shadcn_ui as ui
 from streamlit_option_menu import option_menu
 from datetime import date
 from main import update, login, logsLogin
@@ -51,11 +52,9 @@ def loginForm():
                                 update(worksheet='logLogins', data=userUpdate)
                                 logsLogin()
 
-                            st.session_state.logado = True
                             return True
                         else:
                             st.warning('usuário/senha inválido')
-                            st.session_state.logado = False
                             return False
 
     elif tipo == 'Criar Conta':

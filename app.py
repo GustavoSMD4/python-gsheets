@@ -14,9 +14,6 @@ if 'logado' not in st.session_state:
     
 if 'usuarios' not in st.session_state:
     main.login()
- 
-if 'btnLogar' not in st.session_state:
-    st.session_state.btnLogar = False
     
 if 'logLogins' not in st.session_state:
     main.logsLogin()
@@ -28,14 +25,7 @@ if st.session_state.logado == False:
     logged = loginForm()
     if logged == True:
         st.session_state.logado = True
-
-btnLogar = ''
-if st.session_state.logado == True:
-    if st.session_state.btnLogar == False:
-        btnLogar = st.button('Logar')
-        if btnLogar == True:
-            st.session_state.btnLogar = True
-
+        st.rerun()
 
 usuarioLogado = st.session_state['usuarioLogado']
 
@@ -43,18 +33,18 @@ optionsMenu = []
 icons = []
 
 
-if st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] == 'admin':
+if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
     optionsMenu = ['Funcionários', 'Stats Funcionários']
     icons = ['person-vcard-fill', 'bar-chart-line-fill']
     
         
-elif st.session_state.logado == True and st.session_state.btnLogar == True and usuarioLogado['role'] != 'admin':
+elif st.session_state.logado == True and usuarioLogado['role'] != 'admin':
     st.header('Você não tem permissão para acessar todas as abas')
     optionsMenu = ['Stats Funcionários']
     icons = ['bar-chart-line-fill']
     
 
-if st.session_state.logado == True and st.session_state.btnLogar == True:
+if st.session_state.logado == True:
     with st.sidebar:
         menuSelecionado = option_menu(menu_title=F"Olá, {usuarioLogado['nome']}",
                                 options=optionsMenu,
@@ -63,9 +53,8 @@ if st.session_state.logado == True and st.session_state.btnLogar == True:
         
         logout = st.button('Logout')
         if logout:
-            st.session_state['logado'] = False
-            st.session_state['btnLogar'] = False
-            main.login()
+            st.session_state.logado = False
+            st.rerun()
             
     if menuSelecionado == 'Funcionários':
         viewFuncionarios()
