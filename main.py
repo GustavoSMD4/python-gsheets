@@ -13,6 +13,9 @@ def logsLogin():
 
 def consultaFuncionarios():
     funcionarios = conn.read(worksheet='funcionario', usecols=list(range(5)), ttl=0)
+    funcionarios['cpf'] = funcionarios['cpf'].apply(lambda x: str(x).replace(',', '').replace('.', ''))
+    funcionarios['cpf'] = funcionarios['cpf'].apply(lambda x: x[:-1] if len(x) > 11 else x)
+    
     st.session_state['funcionarios'] = funcionarios.dropna()
     
 def getCargos():

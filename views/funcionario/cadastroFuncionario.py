@@ -15,14 +15,14 @@ def cadastroFuncionario():
     departamentos = st.session_state['departamentos']
     cargos = st.session_state['cargos']
 
-    with st.form('formCadastroFuncionario', clear_on_submit=True):
+    with st.form('formCadastroFuncionario'):
 
         st.title('Cadastro funcionário')
         
-        col1, col2 = st.columns([3, 1])
+        col1, col2 = st.columns([2, 1])
         
         nome = col1.text_input('Nome', autocomplete='off')
-        idade = col2.text_input('idade', autocomplete='off')
+        cpf = col2.text_input('cpf', autocomplete='off')
         
         col3, col4, col5 = st.columns(3)
 
@@ -33,24 +33,37 @@ def cadastroFuncionario():
         btnAdicionar = st.form_submit_button('Adicionar')
 
         if btnAdicionar == True:
-            if nome and idade and departamento and cargo and salario:
-            
-                funcionarioCadastrar = pd.DataFrame([
-                    {
-                        'nome': nome.upper().rstrip(),
-                        'idade': int(idade),
-                        'departamento': departamento,
-                        'cargo': cargo,
-                        'salario': float(salario),
-                    }
-                ])
-    
-                funcionarios = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
-    
-                update(worksheet='funcionario', data=funcionarios)
-                consultaFuncionarios()
-    
-                st.success('Cadastrado')
-            
+            if nome and cpf and departamento and cargo and salario:
+                
+                cpf = cpf.replace('.', '').replace('-', '')
+                
+                if len(cpf) != 11:
+                    st.warning('CPF inválido')
+
+                else:
+                    
+                    cpfExiste = listaFuncionarios[listaFuncionarios['cpf'] == cpf]
+                    if len(cpfExiste) >= 1:
+                        st.warning('CPF já cadastrado')
+                        
+                    else:
+                        
+                        funcionarioCadastrar = pd.DataFrame([
+                            {
+                                'cpf': cpf,
+                                'nome': nome.upper().rstrip(),
+                                'departamento': departamento,
+                                'cargo': cargo,
+                                'salario': float(salario),
+                            }
+                        ])
+
+                        funcionarios = pd.concat([listaFuncionarios, funcionarioCadastrar], ignore_index=True)
+
+                        update(worksheet='funcionario', data=funcionarios)
+                        consultaFuncionarios()
+
+                        st.success('Cadastrado')
+
             else:
                 st.warning('Algum campo não foi informado')

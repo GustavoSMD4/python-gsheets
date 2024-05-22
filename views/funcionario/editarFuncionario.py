@@ -14,29 +14,33 @@ def editar():
     cargos = st.session_state['cargos']
 
     st.header('Editar funcionário')
-    nome = st.text_input('Nome do funcionário que deseja editar')
+    cpf = st.text_input('CPF do funcionário que deseja editar', autocomplete='off').rstrip()
     btnLocalizarFuncionario = st.button('localizar funcionário')
 
     funcionarioUpdate = None
     if btnLocalizarFuncionario:
-        funcionarioUpdate = funcionarios[funcionarios['nome'] == nome.upper()]
-        
-        if funcionarioUpdate.empty:
-            st.warning('Funcionário não localizado.')
-        else:
-            st.session_state['funcionarioUpdate'] = funcionarioUpdate
+        cpf = cpf.replace('.', '').replace('-', '')
+        if len(cpf) != 11:
+            st.warning('CPF inválido.')
+        else: 
+            funcionarioUpdate = funcionarios[funcionarios['cpf'] == cpf]
+
+            if funcionarioUpdate.empty:
+                st.warning('Funcionário não localizado.')
+            else:
+                st.session_state['funcionarioUpdate'] = funcionarioUpdate
 
     if 'funcionarioUpdate' in st.session_state:
         funcionarioUpdate = st.session_state['funcionarioUpdate']
         
-        if not funcionarioUpdate.empty and nome:
+        if not funcionarioUpdate.empty and cpf:
             with st.form('formEditarFuncionario', clear_on_submit=True):
-                col1, col2 = st.columns([3, 1])
+                col1, col2 = st.columns([2, 1])
                 col3, col4, col5 = st.columns(3)
                 
                 nomeEditar = col1.text_input('Nome', value=funcionarioUpdate.iloc[0]['nome'], autocomplete='off')
                 
-                idade = col2.text_input('Idade', value=int(funcionarioUpdate.iloc[0]['idade']), autocomplete='off')
+                cpfEditar = col2.text_input('cpf', value=funcionarioUpdate.iloc[0]['cpf'], autocomplete='off')
                 
                 departamento = col3.selectbox('Departamento', options=departamentos['departamento'],
                                               index=list(departamentos['departamento']).index(funcionarioUpdate.iloc[0]['departamento']))
@@ -49,8 +53,9 @@ def editar():
                 btnEditar = st.form_submit_button('Editar')
                 
                 if btnEditar == True:
-                    funcionarios.loc[funcionarios['nome'] == nome.upper(), 
-                                     ['nome', 'idade', 'departamento', 'cargo', 'salario']] = [nomeEditar.upper(), int(idade), departamento, cargo, float(salario)]
+                    cpfEditar = cpfEditar.replace('.', '').replace('-', '')
+                    funcionarios.loc[funcionarios['cpf'] == cpf, 
+                                     ['cpf', 'nome', 'departamento', 'cargo', 'salario']] = [cpfEditar, nomeEditar.upper(), departamento, cargo, float(salario)]
                     
                     update(worksheet='funcionario', data=funcionarios)
                     consultaFuncionarios()
