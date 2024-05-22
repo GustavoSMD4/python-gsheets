@@ -61,9 +61,9 @@ def loginForm():
 
         with st.form('formCriarConta'):
             st.header('Criar Conta')
-            nome = st.text_input('Nome', autocomplete='off')
-            user = st.text_input('Nome usuário', autocomplete='off')
-            senha = st.text_input("Senha", type="password")
+            nome = st.text_input('Nome', autocomplete='off').rstrip()
+            user = st.text_input('Nome usuário', autocomplete='off').rstrip()
+            senha = st.text_input("Senha", type="password").rstrip()
             btnCriar = st.form_submit_button('Criar conta')
 
         if btnCriar == True:

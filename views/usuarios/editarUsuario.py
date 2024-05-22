@@ -5,7 +5,7 @@ def editar():
     usuarios = st.session_state['usuarios']
 
     st.header('Editar Usuário')
-    nome = st.text_input('Nome de usuário do usuário que deseja editar')
+    nome = st.text_input('Nome de usuário do usuário que deseja editar').rstrip()
     btnLocalizarUsuario = st.button('localizar usuário')
 
     usuarioUpdate = None
@@ -26,11 +26,11 @@ def editar():
                 col1, col2= st.columns(2)
                 col3, col4 = st.columns([2, 1])
                 
-                usuarioEditar = col1.text_input('Usuário', value=usuarioUpdate.iloc[0]['usuario'], autocomplete='off')
+                usuarioEditar = col1.text_input('Usuário', value=usuarioUpdate.iloc[0]['usuario'], autocomplete='off').rstrip()
                 
-                nomeEditar = col2.text_input('Nome', value=usuarioUpdate.iloc[0]['nome'], autocomplete='off')
+                nomeEditar = col2.text_input('Nome', value=usuarioUpdate.iloc[0]['nome'], autocomplete='off').rstrip()
                 
-                senha = col3.text_input('Senha', value=usuarioUpdate.iloc[0]['senha'], type='password')
+                senha = col3.text_input('Senha', value=usuarioUpdate.iloc[0]['senha'], type='password').rstrip()
                 
                 role = col4.selectbox('Role', options=['admin', 'user'], index=['admin', 'user'].index(usuarioUpdate.iloc[0]['role']))
                 
