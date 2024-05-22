@@ -16,11 +16,14 @@ def viewFuncionarios():
     
     if tipoView == 'Cadastro':
         cadastroFuncionario()
+        
     elif tipoView == 'Consulta':
-        consulta()
         if 'funcionarios' not in st.session_state:
             consultaFuncionarios()
+        consulta()
+        
     elif tipoView == 'Excluir':
         deleteFuncionario()
+        
     elif tipoView == 'Editar':
         editar()

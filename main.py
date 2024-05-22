@@ -27,11 +27,11 @@ def getDepartamentos():
     st.session_state['departamentos'] = departamentos.dropna()
     
 def consultaContas():
-    contas = conn.read(worksheet='contas', usecols=list(range(5)), ttl=0)
+    contas = conn.read(worksheet='contas', usecols=list(range(4)), ttl=0)
     st.session_state['contas'] = contas.dropna()
     
 def getTipoConta():
-    tipoConta = conn.read(worksheet='tipoConta', usecols=list(range(5)), ttl=0)
+    tipoConta = conn.read(worksheet='tipoConta', usecols=list(range(1)), ttl=0)
     st.session_state['tipoConta'] = tipoConta.dropna()
 
 def update(worksheet, data, spreadUrl=None):
