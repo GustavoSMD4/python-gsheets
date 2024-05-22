@@ -7,8 +7,6 @@ from views.usuarios.mainUsuarios import viewUsuarios
 from views.conta.mainContas import viewContas
 import main
 
-st.set_page_config(layout='wide')
-
 if 'logado' not in st.session_state:
     st.session_state.logado = False
     

@@ -1,3 +1,4 @@
+import streamlit as st
 from streamlit_option_menu import option_menu
 from views.funcionario.cadastroFuncionario import cadastroFuncionario
 from views.funcionario.consultaFuncionario import consulta
@@ -16,8 +17,9 @@ def viewFuncionarios():
     if tipoView == 'Cadastro':
         cadastroFuncionario()
     elif tipoView == 'Consulta':
-        consultaFuncionarios()
         consulta()
+        if 'funcionarios' not in st.session_state:
+            consultaFuncionarios()
     elif tipoView == 'Excluir':
         deleteFuncionario()
     elif tipoView == 'Editar':

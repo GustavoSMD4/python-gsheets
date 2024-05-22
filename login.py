@@ -11,10 +11,12 @@ def loginForm():
     logs = st.session_state['logsLogin']
     
     options=['Login', 'Criar Conta']
-    tipo = option_menu(menu_title='Login/Criar Conta',
-                       options=options,
-                       icons=['box-arrow-in-right', 'plus-square'],
-                       orientation='horizontal')
+    
+    with st.sidebar:
+        
+        tipo = option_menu(menu_title='Login',
+                           options=options,
+                           icons=['box-arrow-in-right', 'plus-square'])
     
     if tipo == 'Login':
         with st.form('formLogin'):
