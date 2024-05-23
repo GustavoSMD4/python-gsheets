@@ -8,7 +8,7 @@ from views.usuarios.mainUsuarios import viewUsuarios
 from views.conta.mainContas import viewContas
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -34,7 +34,7 @@ optionsMenu = []
 icons = []
 
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
-    optionsMenu = ['Home', 'Gestão de usuários', 'Funcionários', 'Contas']
+    optionsMenu = ['Home', 'Gestão de Usuários', 'Funcionários', 'Contas a Pagar']
     icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'credit-card-2-back-fill']
         
 elif st.session_state.logado == True and usuarioLogado['role'] != 'admin':
@@ -57,13 +57,13 @@ if st.session_state.logado == True:
     if menuSelecionado == 'Home':
         home()
         
-    if menuSelecionado == 'Gestão de usuários':
+    if menuSelecionado == 'Gestão de Usuários':
         viewUsuarios()
     
     elif menuSelecionado == 'Funcionários':
         viewFuncionarios()
         
-    elif menuSelecionado == 'Contas':
+    elif menuSelecionado == 'Contas a Pagar':
         viewContas()
         
     

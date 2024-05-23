@@ -21,7 +21,7 @@ def consulta():
     
     if st.session_state['tipoOperacao'] == 'inicial':
     
-        st.subheader('Consulta funcionários')
+        st.subheader('Funcionários')
 
         funcionariosDisplay = funcionarios[0:]
         funcionariosDisplay['salario'] = funcionarios['salario'].apply(lambda x: F"R${x:,.2f}")
