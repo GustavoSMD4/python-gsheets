@@ -8,7 +8,7 @@ from main import getTipoConta, consultaContas, getContasFixas
 
 def viewContas():
     
-    st.header('Em desenvolvimento')
+    st.warning('Em desenvolvimento')
     
     if 'contas' not in st.session_state:
         consultaContas()
