@@ -125,13 +125,14 @@ def consulta():
                     
                     if btnExcluir:
                         
-                        if st.session_state['usuarioLogado']['usuario'] == linhaSelecionada['nome'].iloc[0]:
+                        if st.session_state['usuarioLogado']['usuario'] == linhaSelecionada['usuario'].iloc[0]:
                             st.warning('O usuário que você tentou excluir é o que está sendo usado agora.')
                         else:
                         
-                            usuarios = usuarios[usuarios['usuario'] != linhaSelecionada['nome'].iloc[0]]
+                            usuarios = usuarios[usuarios['usuario'] != linhaSelecionada['usuario'].iloc[0]]
                     
                             update(worksheet='usuario', data=usuarios)
                             st.session_state.pop('linhaSelecionada')
                             st.session_state.pop('selected_row')
+                            st.session_state['usuarios'] = usuarios
                             st.rerun()

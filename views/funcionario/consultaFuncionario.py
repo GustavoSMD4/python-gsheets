@@ -131,7 +131,18 @@ def consulta():
                 with st.form('formExcluir'):  
                     st.header(F"Excluir {linhaSelecionada['nome'].iloc[0]} ?")
                     ui.table(linhaSelecionada)
-                    bntExcluir = st.form_submit_button('Excluir')
+                    btnExcluir = st.form_submit_button('Excluir')
+                    
+                    if btnExcluir == True:
+                        funcionarios = funcionarios[funcionarios['cpf'] != linhaSelecionada['cpf'].iloc[0]]
+                        
+                        update(worksheet='funcionario', data=funcionarios)
+                        
+                        st.session_state['funcionarios'] = funcionarios
+                        st.session_state.pop('linhaSelecionada')
+                        st.session_state.pop('selected_row')
+                        st.session_state.pop('tipoOperacao')
+                        st.rerun()
 
                     if btnCancelar == True:
                         st.session_state.pop('linhaSelecionada')

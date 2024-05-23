@@ -2,12 +2,13 @@ import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
 from login import loginForm
+from home import home
 from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.usuarios.mainUsuarios import viewUsuarios
 from views.conta.mainContas import viewContas
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
@@ -54,7 +55,7 @@ if st.session_state.logado == True:
             st.rerun()
             
     if menuSelecionado == 'Home':
-        st.header('Home')
+        home()
         
     if menuSelecionado == 'Gestão de usuários':
         viewUsuarios()
