@@ -23,7 +23,7 @@ def loginForm():
             st.header('Login')
             user = st.text_input('Usuário', autocomplete='off').rstrip()
             senha = st.text_input("Senha", type="password").rstrip()
-            btnLogin = st.form_submit_button('Verificar')
+            btnLogin = st.form_submit_button('Logar')
             
         
             if btnLogin == True:
@@ -40,7 +40,7 @@ def loginForm():
 
                             st.session_state['usuarioLogado'] = usuarioLogado
 
-                            st.success('Usuário e senha localizados, clique em logar para continuar.')
+                            st.success('Fazendo login.')
 
                             log = pd.DataFrame([
                             {

@@ -116,9 +116,22 @@ def consulta():
                 with st.form('formExcluir'):  
                     st.header(F"Excluir {linhaSelecionada['nome'].iloc[0]} ?")
                     ui.table(linhaSelecionada)
-                    bntExcluir = st.form_submit_button('Excluir')
+                    btnExcluir = st.form_submit_button('Excluir')
                     
                     if btnCancelar == True:
                         st.session_state.pop('linhaSelecionada')
                         st.session_state.pop('selected_row')
                         st.rerun()
+                    
+                    if btnExcluir:
+                        
+                        if st.session_state['usuarioLogado']['usuario'] == linhaSelecionada['nome'].iloc[0]:
+                            st.warning('O usuário que você tentou excluir é o que está sendo usado agora.')
+                        else:
+                        
+                            usuarios = usuarios[usuarios['usuario'] != linhaSelecionada['nome'].iloc[0]]
+                    
+                            update(worksheet='usuario', data=usuarios)
+                            st.session_state.pop('linhaSelecionada')
+                            st.session_state.pop('selected_row')
+                            st.rerun()
