@@ -36,8 +36,12 @@ icons = []
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
     optionsMenu = ['Home', 'Gestão de Usuários', 'Funcionários', 'Contas a Pagar']
     icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'credit-card-2-back-fill']
+    
+elif st.session_state.logado == True and usuarioLogado['role'] == 'financeiro':
+    optionsMenu = ['Home', 'Contas a Pagar']
+    icons = ['house-door-fill', 'credit-card-2-back-fill']
         
-elif st.session_state.logado == True and usuarioLogado['role'] != 'admin':
+elif st.session_state.logado == True and usuarioLogado['role'] == 'user':
     optionsMenu = ['Home']
     icons = ['house-door-fill']
     

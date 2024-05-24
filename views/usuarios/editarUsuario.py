@@ -32,7 +32,7 @@ def editar():
                 
                 senha = col3.text_input('Senha', value=usuarioUpdate.iloc[0]['senha'], type='password').rstrip()
                 
-                role = col4.selectbox('Role', options=['admin', 'user'], index=['admin', 'user'].index(usuarioUpdate.iloc[0]['role']))
+                role = col4.selectbox('Role', options=['admin', 'user'], index=['admin', 'financeiro', 'user'].index(usuarioUpdate.iloc[0]['role']))
                 
                 btnEditar = st.form_submit_button('Editar')
                 

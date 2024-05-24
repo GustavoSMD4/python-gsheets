@@ -42,19 +42,25 @@ def create():
                
                if tipo == 'Fixa':
                    
-                   contaCriar = pd.DataFrame([
-                        {
-                            'conta': conta,
-                            'vencimento': vencimento,
-                            'valor': float(valor),
-                            'tipo': tipo
-                        }
-                    ])
+                   contaExiste = contasFixas[contasFixas['conta'] == conta]
+                   if len(contaExiste) > 1:
+                       st.warning('Essa conta já existe')
+                       
+                   else:
                    
-                   dfUpdateContasFixas = pd.concat([contasFixas, contaCriar], ignore_index=True)
-                   
-                   update(worksheet='contaFixa', data=dfUpdateContasFixas)
-                   st.session_state['contasFixas'] = dfUpdateContasFixas
+                        contaCriar = pd.DataFrame([
+                             {
+                                 'conta': conta,
+                                 'vencimento': vencimento,
+                                 'valor': float(valor),
+                                 'tipo': tipo
+                             }
+                         ])
+
+                        dfUpdateContasFixas = pd.concat([contasFixas, contaCriar], ignore_index=True)
+
+                        update(worksheet='contaFixa', data=dfUpdateContasFixas)
+                        st.session_state['contasFixas'] = dfUpdateContasFixas
                
                consultaContas()
                 

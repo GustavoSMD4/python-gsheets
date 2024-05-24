@@ -14,7 +14,7 @@ def create():
         user = col1.text_input('Nome de usuário', autocomplete='off').rstrip()
         nome = col2.text_input('Nome', autocomplete='off').rstrip()
         senha = col3.text_input("Senha", type="password").rstrip()
-        role = col4.selectbox('Role', options=['admin', 'user'])
+        role = col4.selectbox('Role', options=['admin', 'financeiro', 'user'])
         btnCriar = st.form_submit_button('Criar conta')
         
         if btnCriar == True:
