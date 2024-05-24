@@ -65,7 +65,7 @@ def consulta():
                     
                     usuarioEditar = col1.text_input('Nome de usuário', value=linhaSelecionada['usuario'].iloc[0], autocomplete='off').rstrip()
                     role = col2.selectbox('Role', options=['admin', 'user'], 
-                                        index=['admin', 'user'].index(linhaSelecionada['role'].iloc[0]))
+                                        index=['admin', 'financeiro', 'user'].index(linhaSelecionada['role'].iloc[0]))
 
                     btnEditar = st.form_submit_button('Confirmar')
                     
