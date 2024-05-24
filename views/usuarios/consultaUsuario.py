@@ -72,6 +72,7 @@ def consulta():
                     if btnVoltar == True:
                         st.session_state.pop('linhaSelecionada')
                         st.session_state.pop('selected_row')
+                        
                         st.rerun()
 
                     if btnEditar == True and nome and usuarioEditar and role:
