@@ -9,7 +9,7 @@ from views.conta.mainContas import viewContas
 from views.caixa.mainCaixa import viewCaixa
 import main
 
-# st.set_page_config(layout='wide')
+st.set_page_config(layout='wide')
 
 if 'logado' not in st.session_state:
     st.session_state.logado = False
