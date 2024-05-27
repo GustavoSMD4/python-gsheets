@@ -42,6 +42,14 @@ def getTipoConta():
     tipoConta = conn.read(worksheet='tipoConta', usecols=list(range(1)), ttl=0)
     st.session_state['tipoConta'] = tipoConta.dropna()
 
+def getCaixa():
+    caixa = conn.read(worksheet='caixa', usecols=list(range(2)), ttl=0)
+    st.session_state['caixa'] = caixa.dropna()
+    
+def getMovimentacoesCaixa():
+    movimentacoes = conn.read(worksheet='movimentacaoCaixa', usecols=list(range(4)), ttl=0)
+    st.session_state['movimentacoesCaixa'] = movimentacoes.dropna()
+
 def update(worksheet, data, spreadUrl=None):
     if spreadUrl != None:
         conn.update(worksheet=worksheet, data=data, spreadsheet=spreadUrl)

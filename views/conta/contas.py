@@ -8,20 +8,20 @@ def consulta():
     
     contasFormatadas = contas[0:]
     
-    meses_em_portugues = {
-        1: 'Janeiro',
-        2: 'Fevereiro',
-        3: 'Março',
-        4: 'Abril',
-        5: 'Maio',
-        6: 'Junho',
-        7: 'Julho',
-        8: 'Agosto',
-        9: 'Setembro',
-        10: 'Outubro',
-        11: 'Novembro',
-        12: 'Dezembro'
-    }
+    # meses_em_portugues = {
+    #     1: 'Janeiro',
+    #     2: 'Fevereiro',
+    #     3: 'Março',
+    #     4: 'Abril',
+    #     5: 'Maio',
+    #     6: 'Junho',
+    #     7: 'Julho',
+    #     8: 'Agosto',
+    #     9: 'Setembro',
+    #     10: 'Outubro',
+    #     11: 'Novembro',
+    #     12: 'Dezembro'
+    # }
 
     
     contasFormatadas['vencimento'] = pd.to_datetime(contasFormatadas['vencimento'])
@@ -36,18 +36,13 @@ def consulta():
     options.insert(0, 'Todos')
     with st.form('formConsulta'):
         
-        col1, col2 = st.columns(2)
-        mes = col1.selectbox('Mês', options=options)
-        status = col2.selectbox('Situação', options=['Todos', 'Pago', 'Pendente'])
+        mes = st.selectbox('Filtrar por mês', options=options)
     
         btnFiltrar = st.form_submit_button('Filtrar')
         
         if btnFiltrar:
             
             contasFormatadas = contasFormatadas[0:]
-            if status != 'Todos':
-                status = 0 if status == 'Pendente' else 1
-                contasFormatadas = contasFormatadas[contasFormatadas['pago'] == status]
             
             if mes != 'Todos':
                 contasFormatadas = contasFormatadas[contasFormatadas['mes'] == mes]

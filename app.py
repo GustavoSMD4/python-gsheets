@@ -6,6 +6,7 @@ from home import home
 from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.usuarios.mainUsuarios import viewUsuarios
 from views.conta.mainContas import viewContas
+from views.caixa.mainCaixa import viewCaixa
 import main
 
 # st.set_page_config(layout='wide')
@@ -34,8 +35,8 @@ optionsMenu = []
 icons = []
 
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
-    optionsMenu = ['Home', 'Gestão de Usuários', 'Funcionários', 'Contas a Pagar']
-    icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'credit-card-2-back-fill']
+    optionsMenu = ['Home', 'Gestão de Usuários', 'Funcionários', 'Caixa', 'Contas a Pagar']
+    icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'card-heading', 'credit-card-2-back-fill']
     
 elif st.session_state.logado == True and usuarioLogado['role'] == 'financeiro':
     optionsMenu = ['Home', 'Contas a Pagar']
@@ -66,6 +67,9 @@ if st.session_state.logado == True:
     
     elif menuSelecionado == 'Funcionários':
         viewFuncionarios()
+        
+    elif menuSelecionado == 'Caixa':
+        viewCaixa()
         
     elif menuSelecionado == 'Contas a Pagar':
         viewContas()
