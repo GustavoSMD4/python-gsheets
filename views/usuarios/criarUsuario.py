@@ -5,6 +5,7 @@ from main import update, login
 def create():
     
     usuarios = st.session_state['usuarios']
+    roles = st.session_state['roles']
     
     with st.form('formCriarConta'):
         st.header('Criar Conta')
@@ -14,7 +15,7 @@ def create():
         user = col1.text_input('Nome de usuário', autocomplete='off').rstrip()
         nome = col2.text_input('Nome', autocomplete='off').rstrip()
         senha = col3.text_input("Senha", type="password").rstrip()
-        role = col4.selectbox('Role', options=['admin', 'financeiro', 'user'])
+        role = col4.selectbox('Role', options=roles['role'])
         btnCriar = st.form_submit_button('Criar conta')
         
         if btnCriar == True:

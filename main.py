@@ -11,6 +11,10 @@ def logsLogin():
     logs = conn.read(worksheet='logsLogin', usecols=list(range(2)), ttl=0)
     st.session_state['logsLogin'] = logs.dropna()
 
+def getRoles():
+    roles = conn.read(worksheet='roleUsuario', usecols=list(range(1)), ttl=0)
+    st.session_state['roles'] = roles.dropna()
+
 def consultaFuncionarios():
     funcionarios = conn.read(worksheet='funcionario', usecols=list(range(5)), ttl=0)
     funcionarios['cpf'] = funcionarios['cpf'].apply(lambda x: str(x).replace(',', '').replace('.', ''))

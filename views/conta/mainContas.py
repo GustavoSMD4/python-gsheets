@@ -20,15 +20,15 @@ def viewContas():
         getContasFixas()
     
     view = option_menu(menu_title='Contas a Pagar',
-                       options=['Contas Fixas', 'Contas', 'Tipo Conta', 'Nova Conta'],
-                       icons=['receipt', 'credit-card', 'plus-square', 'cash'],
+                       options=['Contas Pagas', 'Contas Fixas', 'Tipo Conta', 'Nova Conta'],
+                       icons=['credit-card', 'receipt', 'plus-square', 'cash'],
                        menu_icon='credit-card-2-back-fill',
                        orientation='horizontal')
     
     if view == 'Contas Fixas':
         contasFixas()
     
-    elif view == 'Contas':
+    elif view == 'Contas Pagas':
         consulta()
         
     elif view == 'Tipo Conta':

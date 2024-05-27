@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 from dateutil.relativedelta import relativedelta
-from main import update
+from main import update, consultaContas, getContasFixas
 
 def contasFixas():
     
@@ -15,8 +15,11 @@ def contasFixas():
            st.session_state['linhaSelecionada'] = False
     
     contasFixasFormatado.drop(columns=['tipo'], inplace=True)
+       
+    contasFixasFormatado['vencimento'] = pd.to_datetime(contasFixasFormatado['vencimento'])
+    contasFixasFormatado['Vencimento'] = contasFixasFormatado['vencimento'].dt.strftime('%d/%m/%Y')
     
-    builder = GridOptionsBuilder.from_dataframe(contasFixasFormatado)
+    builder = GridOptionsBuilder.from_dataframe(contasFixasFormatado[['conta', 'Vencimento', 'valor']])
     builder.configure_selection(use_checkbox=True, selection_mode='multiple')
     builder.configure_column('valor', editable=True)
     go = builder.build()
@@ -35,9 +38,9 @@ def contasFixas():
               try: 
                        
                  linhaSelecionada = pd.DataFrame(linhaSelecionada['selected_rows'])
+                 linhaSelecionada['vencimento'] = pd.to_datetime(linhaSelecionada['vencimento'])
                  
                  if operacao == 'Pagar' and btnSalvarAlterações == True:
-                        linhaSelecionada['vencimento'] = pd.to_datetime(linhaSelecionada['vencimento'])
        
                         contaAtualizada = linhaSelecionada[0:]
        
@@ -49,8 +52,8 @@ def contasFixas():
                         contaPaga['tipo'] = 'Fixa'
                         
                         dfUpdateContas = pd.concat([contas, contaPaga])
-                        contas = dfUpdateContas
                         update(worksheet='contas', data=dfUpdateContas)
+                        consultaContas()
                         
                         for index, row in linhaSelecionada.iterrows():
                                contasFixas.loc[contasFixas['conta'] == row['conta'], ['vencimento', 'valor', 'tipo']] = [
@@ -59,6 +62,7 @@ def contasFixas():
                                'Fixa' ]
                                
                         update(worksheet='contaFixa', data=contasFixas)
+                        getContasFixas()
                         st.rerun()
                         
                  elif operacao == 'Editar' and btnSalvarAlterações == True:
@@ -69,6 +73,8 @@ def contasFixas():
                         
                         
                         update(worksheet='contaFixa', data=contasFixas)
+                        getContasFixas()
+                        st.rerun()
                         
                                
               except Exception:

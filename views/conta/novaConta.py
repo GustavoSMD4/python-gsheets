@@ -8,26 +8,38 @@ def create():
     tipos = st.session_state['tipoConta']
     contasFixas = st.session_state['contasFixas']
     
-    with st.form('formCriarConta'):
-        conta = st.selectbox('Conta', options=tipos)
+    with st.container(border=True):
         
-        col1, col2, col3 = st.columns([2, 1, 1])
+        col1, col2 = st.columns([1, 3])
         
-        vencimento = col1.date_input('Data vencimento', format='DD/MM/YYYY')
-        valor = col2.number_input('Valor')
-        tipo = col3.selectbox('Tipo', options=['Fixa', 'Variável'])
+        tipo = col1.selectbox('Tipo', options=['Fixa', 'Variável'])
+    
+        with col2:
+            if tipo == 'Fixa':
+                conta = st.selectbox('Conta', options=tipos['tipo'])
+            elif tipo == 'Variável':
+                conta = st.text_input('Conta', autocomplete='off').rstrip().upper()
         
-        btnCriar = st.form_submit_button('Confirmar')
+        col3, col4 = st.columns(2)
+        
+        vencimento = col3.date_input('Data vencimento', format='DD/MM/YYYY')
+        valor = col4.number_input('Valor')
+        
+        
+        btnCriar = st.button('Confirmar')
         
         if btnCriar:
             if conta and vencimento and valor:
+                
+               vencimento = vencimento.strftime('%d/%m/%Y')
+                
                if tipo == 'Variável':
                    
                     contaCriar = pd.DataFrame([
                         {
                             'conta': conta,
                             'vencimento': vencimento,
-                            'pago': 0,
+                            'pago': 1,
                             'valor': float(valor),
                             'tipo': tipo
                         }
@@ -60,9 +72,9 @@ def create():
                         dfUpdateContasFixas = pd.concat([contasFixas, contaCriar], ignore_index=True)
 
                         update(worksheet='contaFixa', data=dfUpdateContasFixas)
+                        st.success('Salvo com sucesso.')
                         st.session_state['contasFixas'] = dfUpdateContasFixas
-               
-               consultaContas()
+
                 
                 
             else:
