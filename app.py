@@ -11,6 +11,20 @@ import main
 
 st.set_page_config(layout='wide')
 
+st.markdown(
+        """
+            <style>
+                .appview-container .main .block-container {{
+                    padding-top: {padding_top}rem;
+                    padding-bottom: {padding_bottom}rem;
+                    }}
+
+            </style>""".format(
+            padding_top=3, padding_bottom=1
+        ),
+        unsafe_allow_html=True,
+    )
+
 if 'logado' not in st.session_state:
     st.session_state.logado = False
     
