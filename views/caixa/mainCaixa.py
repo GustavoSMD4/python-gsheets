@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from .movimentacao import movimetacao
 from .historico import historico
-from main import getCaixa, getMovimentacoesCaixa
+from main import getCaixa, getMovimentacoesCaixa, getCategoriasCaixa
 
 def viewCaixa():
     
@@ -11,6 +11,9 @@ def viewCaixa():
     
     if 'movimentacoesCaixa' not in st.session_state:
         getMovimentacoesCaixa()
+    
+    if 'categoriasCaixa' not in st.session_state:
+        getCategoriasCaixa()
         
     caixa = st.session_state['caixa']
     caixa = caixa.iloc[0]

@@ -50,6 +50,10 @@ def getMovimentacoesCaixa():
     movimentacoes = conn.read(worksheet='movimentacaoCaixa', usecols=list(range(4)), ttl=0)
     st.session_state['movimentacoesCaixa'] = movimentacoes.dropna()
 
+def getCategoriasCaixa():
+    categorias = conn.read(worksheet='categoriaMovCaixa', usecols=list(range(1)), ttl=0)
+    st.session_state['categoriasCaixa'] = categorias.dropna()
+
 def update(worksheet, data, spreadUrl=None):
     if spreadUrl != None:
         conn.update(worksheet=worksheet, data=data, spreadsheet=spreadUrl)

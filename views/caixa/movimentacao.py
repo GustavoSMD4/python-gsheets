@@ -6,20 +6,25 @@ def movimetacao():
     
     movimentacoes = st.session_state['movimentacoesCaixa']
     caixa = st.session_state['caixa']
+    categorias = st.session_state['categoriasCaixa']
     
     with st.popover('Nova movimentação'):
         with st.form('formMovimentacao', border=False, clear_on_submit=True):
             st.subheader('Movimentação')
             
-            descricao = st.text_input('Descrição', autocomplete='off').rstrip().upper()
+            col1, col2 = st.columns([3, 1])
             
-            col2, col3, col4 = st.columns(3)
+            descricao = col1.text_input('Descrição', autocomplete='off').rstrip().upper()
             
             data = col2.date_input('Data', format='DD/MM/YYYY')
+            
+            col3, col4, col5 = st.columns(3)
             
             valor = col3.number_input('Valor')
                         
             tipo = col4.selectbox('Tipo', options=['Entrada', 'Saída'])
+            
+            categoria = col5.selectbox('Categoria', options=categorias['descricao'], disabled=tipo == 'Entrada')
 
             btnSalvar = st.form_submit_button('Salvar')
             
@@ -34,7 +39,8 @@ def movimetacao():
                                 'descricao': descricao,
                                 'data': data,
                                 'valor': valor,
-                                'tipo': tipo
+                                'tipo': tipo,
+                                'categoria': 'ENTRADA' if tipo == 'Entrada' else categoria
                             }
                         ])
                         
