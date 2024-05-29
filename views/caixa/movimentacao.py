@@ -18,13 +18,13 @@ def movimetacao():
             
             data = col2.date_input('Data', format='DD/MM/YYYY')
             
-            col3, col4, col5 = st.columns(3)
+            col3, col4, col5 = st.columns([1, 1, 2])
             
             valor = col3.number_input('Valor')
                         
             tipo = col4.selectbox('Tipo', options=['Entrada', 'Saída'])
             
-            categoria = col5.selectbox('Categoria', options=categorias['descricao'], disabled=tipo == 'Entrada')
+            categoria = col5.selectbox('Categoria', options=categorias['descricao'])
 
             btnSalvar = st.form_submit_button('Salvar')
             

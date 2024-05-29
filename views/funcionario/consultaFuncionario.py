@@ -2,9 +2,12 @@ import streamlit as st
 import pandas as pd
 import streamlit_shadcn_ui as ui
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
-from main import update
+from main import update, consultaFuncionarios
 
 def consulta():
+    
+    consultaFuncionarios()
+    
     funcionarios = st.session_state['funcionarios']
     departamentos = st.session_state['departamentos']
     cargos = st.session_state['cargos']

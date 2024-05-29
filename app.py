@@ -7,9 +7,10 @@ from views.funcionario.mainFuncionarios import viewFuncionarios
 from views.usuarios.mainUsuarios import viewUsuarios
 from views.conta.mainContas import viewContas
 from views.caixa.mainCaixa import viewCaixa
+from views.recebimento.mainRecebimento import viewRecebimentos
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 st.markdown(
         """
@@ -49,12 +50,12 @@ optionsMenu = []
 icons = []
 
 if st.session_state.logado == True and usuarioLogado['role'] == 'admin':
-    optionsMenu = ['Home', 'Gestão de Usuários', 'Funcionários', 'Caixa', 'Contas a Pagar']
+    optionsMenu = ['Home', 'Gestão de Usuários', 'Funcionários', 'Caixa', 'Contas a Pagar', 'Recebimento']
     icons = ['house-door-fill', 'person-fill-gear', 'person-vcard-fill', 'card-heading', 'credit-card-2-back-fill']
     
 elif st.session_state.logado == True and usuarioLogado['role'] == 'financeiro':
-    optionsMenu = ['Home', 'Contas a Pagar']
-    icons = ['house-door-fill', 'credit-card-2-back-fill']
+    optionsMenu = ['Home', 'Caixa', 'Contas a Pagar', 'Recebimento']
+    icons = ['house-door-fill', 'card-heading', 'credit-card-2-back-fill']
         
 elif st.session_state.logado == True and usuarioLogado['role'] == 'user':
     optionsMenu = ['Home']
@@ -88,4 +89,5 @@ if st.session_state.logado == True:
     elif menuSelecionado == 'Contas a Pagar':
         viewContas()
         
-    
+    elif menuSelecionado == 'Recebimento':
+        viewRecebimentos()

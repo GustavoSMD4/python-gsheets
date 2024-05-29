@@ -5,9 +5,6 @@ from views.funcionario.consultaFuncionario import consulta
 from main import consultaFuncionarios, getDepartamentos, getCargos
  
 def viewFuncionarios():
-     
-    if 'funcionarios' not in st.session_state:
-        consultaFuncionarios()
         
     if 'departamentos' not in st.session_state:
         getDepartamentos()
