@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from streamlit_gsheets import GSheetsConnection
 
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -54,7 +55,11 @@ def getCategoriasCaixa():
     categorias = conn.read(worksheet='categoriaMovCaixa', usecols=list(range(1)), ttl=0)
     st.session_state['categoriasCaixa'] = categorias.dropna()
 
-def update(worksheet, data, spreadUrl=None):
+def update(worksheet: str, data: pd.DataFrame, spreadUrl: str | None) -> None:
+    """
+       Função para fazer qualquer alteração nos dados da planilha.
+    """
+    
     if spreadUrl != None:
         conn.update(worksheet=worksheet, data=data, spreadsheet=spreadUrl)
     else:

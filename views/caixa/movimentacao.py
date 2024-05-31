@@ -9,7 +9,7 @@ def movimetacao():
     categorias = st.session_state['categoriasCaixa']
     
     with st.popover('Nova movimentação'):
-        with st.form('formMovimentacao', border=False, clear_on_submit=True):
+        with st.container(border=False):
             st.subheader('Movimentação')
             
             col1, col2 = st.columns([3, 1])
@@ -26,7 +26,7 @@ def movimetacao():
             
             categoria = col5.selectbox('Categoria', options=categorias['descricao'])
 
-            btnSalvar = st.form_submit_button('Salvar')
+            btnSalvar = st.button('Salvar')
             
             if btnSalvar:
                 try:

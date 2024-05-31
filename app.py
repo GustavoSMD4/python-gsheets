@@ -10,7 +10,7 @@ from views.caixa.mainCaixa import viewCaixa
 from views.recebimento.mainRecebimento import viewRecebimentos
 import main
 
-st.set_page_config(layout='wide')
+# st.set_page_config(layout='wide')
 
 st.markdown(
         """
