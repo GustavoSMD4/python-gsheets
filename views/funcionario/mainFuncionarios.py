@@ -6,6 +6,9 @@ from main import consultaFuncionarios, getDepartamentos, getCargos
  
 def viewFuncionarios():
         
+    if 'funcionarios' not in st.session_state or len(st.session_state['funcionarios']) == 0:
+        consultaFuncionarios()
+    
     if 'departamentos' not in st.session_state:
         getDepartamentos()
         
