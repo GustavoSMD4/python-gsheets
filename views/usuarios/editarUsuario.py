@@ -1,9 +1,11 @@
 import streamlit as st
+import pandas as pd
 from main import update, login
+from validacoes import validarInputs
 
-def editar():
-    usuarios = st.session_state['usuarios']
-    roles = st.session_state['roles']
+def editar() -> None:
+    usuarios: pd.DataFrame = st.session_state['usuarios']
+    roles: pd.DataFrame = st.session_state['roles']
 
     st.header('Editar Usuário')
     nome = st.text_input('Nome de usuário do usuário que deseja editar').rstrip()
@@ -38,11 +40,19 @@ def editar():
                 btnEditar = st.form_submit_button('Editar')
                 
                 if btnEditar == True:
-                    usuarios.loc[usuarios['usuario'] == nome, 
-                                     ['usuario', 'nome', 'senha', 'role']] = [usuarioEditar, nomeEditar, senha, role]
-                    
-                    update(worksheet='usuario', data=usuarios)
-                    
-                    st.success('Atualizado com sucesso.')
-                    st.session_state.pop('usuarioUpdate')  # Limpa o estado após a atualização
+                    try:
+                        validarInputs((usuarioEditar, nomeEditar, senha, role), 
+                                      (str, str, str, str),
+                                      ('Usuário', 'Nome', 'Senha', 'Role'))
+                        
+                        usuarios.loc[usuarios['usuario'] == nome, 
+                                         ['usuario', 'nome', 'senha', 'role']] = [usuarioEditar, nomeEditar, senha, role]
+
+                        update(worksheet='usuario', data=usuarios)
+
+                        st.success('Atualizado com sucesso.')
+                        st.session_state.pop('usuarioUpdate')  # Limpa o estado após a atualização
+                        
+                    except ValueError as e:
+                        st.warning(e)
     

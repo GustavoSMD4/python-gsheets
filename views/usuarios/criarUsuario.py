@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
 from main import update, login
+from validacoes import validarInputs
 
 def create():
     
-    usuarios = st.session_state['usuarios']
-    roles = st.session_state['roles']
+    usuarios: pd.DataFrame = st.session_state['usuarios']
+    roles: pd.DataFrame = st.session_state['roles']
     
     with st.form('formCriarConta'):
         st.header('Criar Conta')
@@ -19,26 +20,30 @@ def create():
         btnCriar = st.form_submit_button('Criar conta')
         
         if btnCriar == True:
-            if not user or not senha or not nome:
-                st.warning('Usuario ou senha não infomados.')
+            try:
+                validarInputs((user, nome, senha, role), (str, str, str, str),
+                                 ('Nome de usuário', 'Nome', 'Senha', 'Role'))
 
-            elif (usuarios['usuario'] == user).any():
-                st.warning('Nome de usuário já existe.')
+                if (usuarios['usuario'] == user).any():
+                    st.warning('Nome de usuário já existe.')
+
+                elif (usuarios['usuario'] != user).any():
+
+                    userCreate = pd.DataFrame([
+                        {
+                            'usuario': user,
+                            'nome': nome,
+                            'senha': senha,
+                            'role': role
+                        }
+                    ])
+
+                    dfUpdate = pd.concat([usuarios, userCreate], ignore_index=True)
+
+                    update(data=dfUpdate, worksheet='usuario')
+                    st.success('Usuário cadastrado')
+                    usuarios = dfUpdate
+                    login()
                 
-            elif user and senha and nome and (usuarios['usuario'] != user).any():
-
-                userCreate = pd.DataFrame([
-                    {
-                        'usuario': user,
-                        'nome': nome,
-                        'senha': senha,
-                        'role': role
-                    }
-                ])
-
-                dfUpdate = pd.concat([usuarios, userCreate], ignore_index=True)
-
-                update(data=dfUpdate, worksheet='usuario')
-                st.success('Usuário cadastrado')
-                usuarios = dfUpdate
-                login()
+            except ValueError as e:
+                st.warning(e)

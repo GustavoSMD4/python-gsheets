@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from main import update
+from datetime import datetime
+from validacoes import validarInputs
 
 def movimetacao():
     
@@ -18,7 +20,7 @@ def movimetacao():
             
             data = col2.date_input('Data', format='DD/MM/YYYY')
             
-            col3, col4, col5 = st.columns([1, 1, 2])
+            col3, col4, col5 = st.columns([1, 1.5, 1.5])
             
             valor = col3.number_input('Valor')
                         
@@ -30,32 +32,35 @@ def movimetacao():
             
             if btnSalvar:
                 try:
-                    if descricao and data and valor and tipo:
-                        if tipo == 'Saída':
-                            valor = valor * -1
-                            
-                        movimentacaoCriar = pd.DataFrame([
-                            {
-                                'descricao': descricao,
-                                'data': data,
-                                'valor': valor,
-                                'tipo': tipo,
-                                'categoria': 'ENTRADA' if tipo == 'Entrada' else categoria
-                            }
-                        ])
+                    validarInputs((descricao, data, valor, tipo, categoria),
+                                  (str, datetime.date, float, str, str),
+                              ('Descrição', 'Data', 'Valor', 'Tipo', 'Categoria'))
+                    
+                    if tipo == 'Saída':
+                        valor = valor * -1
                         
-                        dfUpdate = pd.concat([movimentacoes, movimentacaoCriar], ignore_index=True)
+                    movimentacaoCriar = pd.DataFrame([
+                        {
+                            'descricao': descricao,
+                            'data': data,
+                            'valor': valor,
+                            'tipo': tipo,
+                            'categoria': 'ENTRADA' if tipo == 'Entrada' else categoria
+                        }
+                    ])
+                    
+                    dfUpdate = pd.concat([movimentacoes, movimentacaoCriar], ignore_index=True)
+                    
+                    update(worksheet='movimentacaoCaixa', data=dfUpdate)
+                    st.session_state['movimentacoesCaixa'] = dfUpdate
+                    
+                    caixa['saldo'] = caixa['saldo'] + valor
+                    
+                    update(worksheet='caixa', data=caixa)
+                    st.session_state['caixa'] = caixa
+                    st.rerun()
                         
-                        update(worksheet='movimentacaoCaixa', data=dfUpdate)
-                        st.session_state['movimentacoesCaixa'] = dfUpdate
-                        
-                        caixa['saldo'] = caixa['saldo'] + valor
-                        
-                        update(worksheet='caixa', data=caixa)
-                        st.session_state['caixa'] = caixa
-                        st.rerun()
-                        
-                except Exception as e:
+                except ValueError as e:
                     st.warning(e)
                 
     

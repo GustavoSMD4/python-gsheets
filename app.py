@@ -10,7 +10,7 @@ from views.caixa.mainCaixa import viewCaixa
 from views.recebimento.mainRecebimento import viewRecebimentos
 import main
 
-# st.set_page_config(layout='wide')
+st.set_page_config(layout='wide', page_title='Gestão interna')
 
 st.markdown(
         """
@@ -44,7 +44,7 @@ if st.session_state.logado == False:
         st.session_state.logado = True
         st.rerun()
 
-usuarioLogado = st.session_state['usuarioLogado']
+usuarioLogado: pd.DataFrame = st.session_state['usuarioLogado']
 
 optionsMenu = []
 icons = []

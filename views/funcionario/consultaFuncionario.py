@@ -3,10 +3,9 @@ import pandas as pd
 import streamlit_shadcn_ui as ui
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 from main import update, consultaFuncionarios
+from validacoes import validarInputs
 
 def consulta():
-    
-    consultaFuncionarios()
     
     funcionarios = st.session_state['funcionarios']
     departamentos = st.session_state['departamentos']
@@ -78,7 +77,7 @@ def consulta():
 
                         nomeEditar = col1.text_input('Nome', value=linhaSelecionada.iloc[0]['nome'], autocomplete='off')
 
-                        cpfEditar = col2.text_input('cpf', value=linhaSelecionada.iloc[0]['cpf'], autocomplete='off')
+                        cpfEditar = col2.text_input('CPF', value=linhaSelecionada.iloc[0]['cpf'], autocomplete='off')
 
                         departamento = col3.selectbox('Departamento', options=departamentos['departamento'],
                                                       index=list(departamentos['departamento']).index(linhaSelecionada.iloc[0]['departamento']))
@@ -96,38 +95,45 @@ def consulta():
                             st.session_state.pop('tipoOperacao')
                             st.rerun()
 
-                        if btnEditar == True and nomeEditar and cpfEditar and departamento and cargo and salario:
+                        if btnEditar == True:
+                            try:
+                                validarInputs((nomeEditar, cpfEditar, departamento, cargo, salario),
+                                              (str, str, str, str, float),
+                                              ('Nome', 'CPF', 'Departamento', 'Cargo', 'Salário'))
+                                
+                                if cpfEditar != cpfAntigo:
 
-                            if cpfEditar != cpfAntigo:
+                                    cpfExiste = funcionarios[funcionarios['cpf'] == cpfEditar]
 
-                                cpfExiste = funcionarios[funcionarios['cpf'] == cpfEditar]
+                                    if len(cpfExiste) >= 1:
+                                        st.warning('CPF já cadastrado.')
 
-                                if len(cpfExiste) >= 1:
-                                    st.warning('CPF já cadastrado.')
+                                    else:
 
-                                else:
+                                        funcionarios.loc[funcionarios['cpf'] == cpfAntigo, 
+                                             ['cpf', 'nome', 'departamento', 'cargo', 'salario']] = [cpfEditar, nomeEditar.upper(), departamento, cargo, float(salario)]
+
+                                    update(worksheet='funcionario', data=funcionarios)
+                                    st.success('Salvo com sucesso.')
+                                    st.session_state.pop('linhaSelecionada')
+                                    st.session_state.pop('selected_row')
+                                    st.session_state.pop('tipoOperacao')
+                                    st.rerun()
+
+                                elif cpfEditar == cpfAntigo:
 
                                     funcionarios.loc[funcionarios['cpf'] == cpfAntigo, 
-                                         ['cpf', 'nome', 'departamento', 'cargo', 'salario']] = [cpfEditar, nomeEditar.upper(), departamento, cargo, float(salario)]
+                                             ['cpf', 'nome', 'departamento', 'cargo', 'salario']] = [cpfEditar, nomeEditar.upper(), departamento, cargo, float(salario)]
 
-                                update(worksheet='funcionario', data=funcionarios)
-                                st.success('Salvo com sucesso.')
-                                st.session_state.pop('linhaSelecionada')
-                                st.session_state.pop('selected_row')
-                                st.session_state.pop('tipoOperacao')
-                                st.rerun()
-
-                            elif cpfEditar == cpfAntigo:
-
-                                funcionarios.loc[funcionarios['cpf'] == cpfAntigo, 
-                                         ['cpf', 'nome', 'departamento', 'cargo', 'salario']] = [cpfEditar, nomeEditar.upper(), departamento, cargo, float(salario)]
-
-                                update(worksheet='funcionario', data=funcionarios)
-                                st.success('Salvo com sucesso.')
-                                st.session_state.pop('linhaSelecionada')
-                                st.session_state.pop('selected_row')
-                                st.session_state.pop('tipoOperacao')
-                                st.rerun()
+                                    update(worksheet='funcionario', data=funcionarios)
+                                    st.success('Salvo com sucesso.')
+                                    st.session_state.pop('linhaSelecionada')
+                                    st.session_state.pop('selected_row')
+                                    st.session_state.pop('tipoOperacao')
+                                    st.rerun()
+                                    
+                            except ValueError as e:
+                                st.warning(e)
 
             elif operacao == 'Excluir':
                 with st.container(border=True):

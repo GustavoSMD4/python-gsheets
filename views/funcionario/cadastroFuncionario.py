@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from main import update, consultaFuncionarios, getDepartamentos, getCargos
+from validacoes import validarInputs
 
 def cadastroFuncionario():
     
@@ -22,7 +23,7 @@ def cadastroFuncionario():
         col1, col2 = st.columns([2, 1])
         
         nome = col1.text_input('Nome', autocomplete='off')
-        cpf = col2.text_input('cpf', autocomplete='off')
+        cpf = col2.text_input('CPF', autocomplete='off')
         
         col3, col4, col5 = st.columns(3)
 
@@ -33,8 +34,10 @@ def cadastroFuncionario():
         btnAdicionar = st.form_submit_button('Adicionar')
 
         if btnAdicionar == True:
-            if nome and cpf and departamento and cargo and salario:
-                
+           try:
+                validarInputs((nome, cpf, departamento, cargo, salario),
+                              (str, str, str, str, float),
+                              ('Nome', 'CPF', 'Departamento', 'Cargo', 'Salário'))
                 cpf = cpf.replace('.', '').replace('-', '')
                 
                 if len(cpf) != 11:
@@ -65,5 +68,5 @@ def cadastroFuncionario():
 
                         st.success('Cadastrado')
 
-            else:
-                st.warning('Algum campo não foi informado')
+           except ValueError as e:
+               st.warning(e)
